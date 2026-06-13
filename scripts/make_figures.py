@@ -27,20 +27,23 @@ fig, (axA, axB) = plt.subplots(1, 2, figsize=(11, 4.3))
 # ---- Panel A: capability inversion ----
 x = range(len(MODELS))
 axA.axhspan(0, TRUST_ALL, color="#fbeaea", zorder=0)  # "worse than just trusting the FM" zone
-axA.axhline(TRUST_ALL, color="#e07b39", ls="--", lw=1.4, label=f"trust-all (never verify) = {TRUST_ALL}")
-axA.axhline(ORACLE, color="#2e8b57", ls="--", lw=1.4, label=f"oracle (verify iff FM wrong) = {ORACLE}")
+axA.axhline(TRUST_ALL, color="#e07b39", ls="--", lw=1.4)
+axA.axhline(ORACLE, color="#2e8b57", ls="--", lw=1.4)
+axA.text(-0.4, ORACLE + 0.18, f"oracle (verify iff FM wrong) = {ORACLE:.1f}", color="#2e8b57", fontsize=8.6, va="bottom")
+axA.text(-0.4, TRUST_ALL + 0.18, f"trust-all (never verify) = {TRUST_ALL:.1f}", color="#e07b39", fontsize=8.6, va="bottom")
 axA.plot(x, NET, "-o", color="#c0392b", lw=2.2, ms=9, zorder=3)
 for xi, (m, nt, a) in enumerate(zip(MODELS, NET, ASSAY)):
-    axA.annotate(f"{nt:.1f}\n({a}% assayed)", (xi, nt), textcoords="offset points", xytext=(0, -28),
-                 ha="center", fontsize=9, color="#333")
-axA.annotate("more capable →\nover-verifies more →\nworse net", (1.0, 15.6), ha="center", fontsize=9.5,
-             color="#c0392b", fontweight="bold")
+    axA.annotate(f"{nt:.1f}  ({a}% assayed)", (xi, nt), textcoords="offset points", xytext=(0, 12),
+                 ha="center", fontsize=8.8, color="#333")
+# annotation lives in the empty band between the two reference lines (clear of both lines and the legend)
+axA.annotate("capability inversion:\nmore capable → over-verifies → worse net", (1.0, 18.9), ha="center",
+             fontsize=9.3, color="#c0392b", fontweight="bold")
 axA.set_xticks(list(x))
 axA.set_xticklabels(MODELS)
 axA.set_ylabel("net reward  (correct − λ·assays)")
-axA.set_ylim(12, 22.4)
+axA.set_ylim(11.5, 22.6)
+axA.set_xlim(-0.45, 2.45)
 axA.set_title("Capability inversion: the strongest model is the worst orchestrator", fontsize=11.5)
-axA.legend(loc="upper center", fontsize=8.5, frameon=False)
 axA.spines[["top", "right"]].set_visible(False)
 
 # ---- Panel B: knowledge doesn't fix it, a reliability signal does ----
@@ -49,7 +52,8 @@ axB.axhline(TRUST_ALL, color="#e07b39", ls="--", lw=1.4)
 axB.bar(xb, COND_NET, color=COND_COLOR, width=0.62, zorder=3)
 for xi, v in zip(xb, COND_NET):
     axB.annotate(f"{v:.1f}", (xi, v), textcoords="offset points", xytext=(0, 4), ha="center", fontsize=9.5)
-axB.annotate("trust-all", (3.35, TRUST_ALL), color="#e07b39", fontsize=8.5, va="center")
+axB.text(-0.45, TRUST_ALL + 0.08, "trust-all (16.7)", color="#e07b39", fontsize=8.6, va="bottom")
+axB.set_xlim(-0.6, 3.6)
 axB.set_xticks(list(xb))
 axB.set_xticklabels(COND, fontsize=9.5)
 axB.set_ylabel("Opus 4.8 net reward")
