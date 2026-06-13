@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "verify-or-trust"
+version = "0.1.0"
+description = "A verifiable-reward agentic benchmark: does an LLM correctly allocate verification when orchestrating a fallible biology foundation model?"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Jihoon Kim" }]
+keywords = [
+    "agentic-evaluation", "llm", "foundation-models", "single-cell",
+    "perturbation", "verifiable-rewards", "computational-biology", "benchmark",
+]
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "scikit-learn>=1.3",
+    "anndata>=0.10",
+    "requests>=2.28",
+]
+
+[project.optional-dependencies]
+# the LLM agent loop (kept optional so panels/baselines/grading work without it)
+agent = ["anthropic>=0.40"]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/jihoonkim/verify-or-trust"
+Issues = "https://github.com/jihoonkim/verify-or-trust/issues"
+
+[project.scripts]
+vot = "verify_or_trust.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/verify_or_trust"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

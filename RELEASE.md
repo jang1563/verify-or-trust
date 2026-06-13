@@ -1,0 +1,17 @@
+# Release process (verification-gated)
+
+This repo is ported from research code with a **gate at every step** — nothing proceeds until the gate is green.
+Quality bar: a stranger can clone, `pip install -e .`, run one command, and reproduce the headline numbers; no
+hardcoded paths, no private deps, no secrets; licensed data is downloaded-from-source, never redistributed.
+
+| step | component | gate (must pass) | status |
+|---|---|---|---|
+| 2 | repo skeleton (pkg, pyproject, license, CLI, stubs) | `pip install -e .` + `pytest` green | ✅ |
+| 3 | substrate builders (gears_norman, state_tahoe) + panels | panels regenerate (same seed) + strata table matches research | ☐ |
+| 4 | baselines | K1 reproduces (oracle ≫ random on accuracy-per-assay) | ☐ |
+| 5 | grader | re-grades committed episode outputs to the published numbers | ☐ |
+| 6 | env + tools (live DE, query_gene, Anthropic SDK, key via env) | mocked-LLM dry-run valid; small real run matches research | ☐ |
+| 7 | CARD + README + results tables (with caveats) | "stranger" read-through: quickstart runs as written | ☐ |
+| 8 | tests + Makefile `reproduce` end-to-end | clean checkout: `make reproduce` green | ☐ |
+| 9 | private GitHub + private HF dataset | clone-from-remote + run works | ☐ |
+| 10 | flip public | separate decision | ☐ |

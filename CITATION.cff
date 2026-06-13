@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use Verify-or-Trust, please cite it as below."
+title: "Verify-or-Trust: a verifiable-reward agentic benchmark for biology foundation-model orchestration"
+authors:
+  - family-names: Kim
+    given-names: Jihoon
+version: 0.1.0
+date-released: 2026-06-12
+license: Apache-2.0
+abstract: >
+  Verify-or-Trust measures whether an LLM agent, orchestrating a fallible perturbation foundation model,
+  allocates costly verification (a real differential-expression assay) to the genes where the model is actually
+  wrong. Graded by a held-out real experiment (a verifiable reward), with LLM-free baselines, two substrates
+  (GEARS/Norman, Arc STATE/Tahoe), and genuine tool execution.

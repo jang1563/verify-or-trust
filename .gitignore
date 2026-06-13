@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# data artifacts that must be regenerated from source (license: not redistributed)
+data/raw/
+data/*.h5ad
+*.h5ad
+data/cache/
+
+# secrets — never commit
+*.key
+*_api_key.txt
+.env
+
+# local episode outputs (large; regenerate)
+runs/
+*.jsonl
+!tests/**/*.jsonl
+
+# OS
+.DS_Store
