@@ -32,6 +32,9 @@ expensive ground-truth tool *selectively*, where a cheap predictor is unreliable
 - **genuine execution** — `run_de` runs a real DE on the cells; `query_gene` hits a real gene database.
 
 ## Headline finding (research runs)
+![Capability inversion: the strongest model is the worst orchestrator; a reliability signal fixes it, domain
+knowledge does not](results/capability_inversion.png)
+
 Frontier models **do not allocate verification** to where the foundation model errs — they over-verify, and
 *more capable models over-verify more*, so under a realistic assay cost the strongest model is the **worst**
 orchestrator (capability inversion). Domain knowledge (`query_gene`) does not fix it; an explicit per-gene
