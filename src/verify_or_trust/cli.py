@@ -32,12 +32,22 @@ def _cmd_run(a: argparse.Namespace) -> int:
     panels = load_panels(a.panels)
     live_de = LiveDE(a.real_de) if a.real_de else None
     genedb = GeneDB(a.query_gene) if a.query_gene else None
+    rel = None
+    if a.reliability_flags:
+        import csv
+        rel = {}
+        with open(a.reliability_flags) as rf:
+            for row in csv.DictReader(rf):
+                rel[(row["perturbation"], row["gene"])] = int(float(row.get("is_unreliable", 0)))
     client = anthropic.Anthropic()  # key from ANTHROPIC_API_KEY
     import os
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     with open(a.out, "w") as fh:
         for i, p in enumerate(panels, 1):
-            rec = run_episode(client, a.model, p, lam=a.lam, live_de=live_de, genedb=genedb)
+            flags = ({g["gene"]: rel.get((p["perturbation"], g["gene"]), 0) for g in p["panel"]}
+                     if rel is not None else None)
+            rec = run_episode(client, a.model, p, lam=a.lam, live_de=live_de, genedb=genedb,
+                              reliability_flags=flags)
             fh.write(json.dumps(rec) + "\n")
             fh.flush()
             print(f"[vot] {i}/{len(panels)} {p['perturbation']} de={rec['n_de']} calls={rec['submitted_n']}",
@@ -133,6 +143,8 @@ def main(argv: list[str] | None = None) -> int:
     rn.add_argument("--out", default="episodes.jsonl")
     rn.add_argument("--real-de", help="path to perturb-seq cells h5ad; run_de computes live DE on the cells")
     rn.add_argument("--query-gene", help="path to a gene-annotation cache json; enables the query_gene DB tool")
+    rn.add_argument("--reliability-flags", help="CSV (perturbation,gene,is_unreliable): a learned per-edge "
+                    "reliability signal annotated into the prompt")
     rn.set_defaults(func=_cmd_run)
 
     args = parser.parse_args(argv)

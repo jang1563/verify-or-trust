@@ -3,7 +3,7 @@
 Anthropic Haiku 4.5 / Sonnet 4.6 / Opus 4.8, 2026-06. λ = assay cost. Reproduce the LLM-free rows with
 `make reproduce`; the LLM rows need an API key (`vot run`). Read with [`CARD.md`](../CARD.md) limitations.
 
-> **Status (2026-06-13):** the **K1 (LLM-free)** and **frontier-model** rows are refreshed on the **deduplicated** substrate (107 panels, seed 13; `make reproduce` for K1, `vot run` for the frontier episodes); the **RL/probe** extension is on deduplicated data. The **reliability-signal** and **live-execution** rows are still from the pre-dedup run (110 panels) and tagged *[pre-dedup]* — a full re-baseline of those conditions is a public-flip item.
+> **Status (2026-06-13):** all GEARS rows — K1, frontier-model, reliability-signal (`vot run --reliability-flags`), `query_gene`, live-execution — and the RL/probe extension are refreshed on the **deduplicated** substrate (107 panels, seed 13). Two rows remain unrefreshed and are tagged: the **+perfect-signal** ceiling *[research-only]* (uses ground truth, excluded from the public harness) and the **Tahoe** cross-substrate replication *[pre-dedup]* (a public-flip item).
 
 ## K1 — the value proof (LLM-free, GEARS/Norman, 107 panels)
 | policy | accuracy | assays/gene | net@λ0.5 |
@@ -31,18 +31,19 @@ p<10⁻⁴)**; Haiku and Sonnet tie (n.s.). The most capable model is the worst 
 ## A reliability signal fixes it; domain knowledge does not (GEARS/Norman)
 | condition | vPrecision | net@λ0.5 (Opus) | notes |
 |---|---:|---:|---|
-| no signal *(clean)* | 36% | 14.86 | frontier over-verifies, nets least |
-| **+ learned trust-head signal (AUC 0.70)** *[pre-dedup]* | **47–48%** | 15.30 | models follow it 94–99%; inversion removed |
-| + perfect-ish signal (AUC ~0.85) *[pre-dedup]* | 59–64% | 17.03 | inversion reversed (Opus best) |
-| + `query_gene` domain knowledge *[pre-dedup]* | ~38% | 13.19 | no targeting gain; assay ↑, net ↓ |
+| no signal | 36% | 14.86 | frontier over-verifies (78% assay), nets least |
+| **+ learned trust-head signal (AUC 0.70)** | **47%** | **17.28** | assay 78%→44%, targeting ↑, net ↑; inversion removed |
+| + `query_gene` domain knowledge | 35% | 14.11 | no targeting gain (vPrec ≈ base); assay ↑ 87%, net ↓ |
+| + perfect-ish signal (AUC ~0.85) *[research-only]* | 59–64% | 17.03 | upper bound; uses ground truth, excluded from the public harness |
 
 Orchestration net scales with the **signal's** quality while the LLM follows near-fully — the bottleneck is the
 foundation model exposing calibrated uncertainty, not the LLM's reasoning (which it does not critically evaluate).
 
 ## Holds under real execution + a real Arc model
-- **Live `run_de`** (DE computed on the Norman cells; 89% agreement with the sceptre reference): findings hold and
-  sharpen — Opus 10.43 < Haiku 13.27 net, both below trust-all 16.97 (over-verifying an imperfect assay costs more).
-- **Arc STATE / Tahoe** (a real released foundation model, drug modality): the allocation failure and capability
+- **Live `run_de`** (DE computed on the Norman cells; 89% agreement with the sceptre reference; clean 107 panels):
+  findings hold and sharpen — Opus 12.44 < Haiku 15.04 net, both below trust-all 17.81 (over-verifying an imperfect
+  assay costs more).
+- **Arc STATE / Tahoe** (a real released foundation model, drug modality) *[pre-dedup]*: the allocation failure and capability
   inversion replicate.
 
 ## Can RL *train* an orchestrator to allocate? (extension — a verifiable-reward study)
