@@ -11,7 +11,19 @@ import argparse
 import sys
 
 from .baselines import load_panels, run_baselines
+from .grade import grade_episodes, load_episodes
 from .panels import PanelConfig, build_panels, write_panels
+
+
+def _cmd_grade(a: argparse.Namespace) -> int:
+    res = grade_episodes(load_panels(a.panels), load_episodes(a.episodes), lam=a.lam)
+    hdr = ("model", "n", "acc", "assay", "net", "vPrec", "vRecall", "rand@b", "untest")
+    print("  " + " ".join(f"{h:>9s}" for h in hdr))
+    for model, m in res.items():
+        print(f"  {model.split('-')[1] if '-' in model else model:>9s} {m['n']:>9d} {m['accuracy']:>9.1%} "
+              f"{m['assays_per_gene']:>9.0%} {m['net']:>9.2f} {m['verify_precision']:>9.0%} "
+              f"{m['verify_recall']:>9.0%} {m['accuracy_random_at_budget']:>9.1%} {m['untested']:>9.0%}")
+    return 0
 
 
 def _cmd_baselines(a: argparse.Namespace) -> int:
@@ -57,8 +69,13 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--lam", type=float, default=0.5)
     b.set_defaults(func=_cmd_baselines)
 
-    for name in ("grade", "run"):
-        sub.add_parser(name, help=f"{name} (wired in a later release step)")
+    gr = sub.add_parser("grade", help="grade episode outputs against the panels")
+    gr.add_argument("--panels", required=True)
+    gr.add_argument("--episodes", required=True, nargs="+", help="episode jsonl path(s) / glob(s)")
+    gr.add_argument("--lam", type=float, default=0.5)
+    gr.set_defaults(func=_cmd_grade)
+
+    sub.add_parser("run", help="run (wired in release step 6)")
 
     args = parser.parse_args(argv)
     if not args.command:
