@@ -57,13 +57,16 @@ def build_panels(substrate: "pd.DataFrame | str", cfg: PanelConfig | None = None
             counts[c] = 0
     counts["n_wrong"] = counts[["wrong_FN", "wrong_FP"]].sum(1)
     counts["n_correct"] = counts[["correct_effect", "correct_noeffect"]].sum(1)
-    eligible = counts[(counts.n_wrong >= cfg.min_wrong) & (counts.n_correct >= cfg.min_correct)].index
+    eligible = set(counts[(counts.n_wrong >= cfg.min_wrong) & (counts.n_correct >= cfg.min_correct)].index)
 
     half = cfg.N // 2
     cols = ["gene", "fm_log2FC", "fm_call", "real_call", "fm_correct", "stratum", "regime", *_RAW_COLS]
     panels: list[dict] = []
-    for pert in eligible:
-        sub = df[df.perturbation == pert]
+    # iterate via a single groupby (O(n) total) rather than re-filtering per perturbation (O(n*perts) -- pathological
+    # on large substrates). sorted=True preserves the perturbation order, so the seeded rng sequence is unchanged.
+    for pert, sub in df.groupby("perturbation", sort=True):
+        if pert not in eligible:
+            continue
 
         def take(strata, k, _sub=sub):
             pool = _sub[_sub.stratum.isin(strata)]

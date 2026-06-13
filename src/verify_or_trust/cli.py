@@ -68,6 +68,20 @@ def _cmd_baselines(a: argparse.Namespace) -> int:
     return 0 if k["passed"] else 1
 
 
+def _cmd_build_substrate(a: argparse.Namespace) -> int:
+    if a.substrate == "state_tahoe":
+        from .substrates.state_tahoe import build_substrate
+        df = build_substrate(split=a.split, out=a.out)
+    elif a.substrate == "gears_norman":
+        from .substrates.gears_norman import build_substrate
+        df = build_substrate(out=a.out)
+    else:
+        print(f"error: unknown substrate '{a.substrate}'", file=sys.stderr)
+        return 2
+    print(f"[vot] built {a.substrate} substrate: {len(df)} edges -> {a.out}")
+    return 0
+
+
 def _cmd_panels(a: argparse.Namespace) -> int:
     if not a.substrate_table:
         print("error: --substrate-table <csv> is required (build it first with a substrate builder; the "
@@ -84,6 +98,12 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vot", description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command")
+
+    bs = sub.add_parser("build-substrate", help="build a substrate table from source (downloads data)")
+    bs.add_argument("--substrate", required=True, choices=["state_tahoe", "gears_norman"])
+    bs.add_argument("--out", required=True)
+    bs.add_argument("--split", default="zeroshot", choices=["zeroshot", "fewshot"], help="state_tahoe only")
+    bs.set_defaults(func=_cmd_build_substrate)
 
     p = sub.add_parser("panels", help="build evaluation panels from a substrate table")
     p.add_argument("--substrate-table", help="CSV with one row per (perturbation, gene) edge (see panels.py)")

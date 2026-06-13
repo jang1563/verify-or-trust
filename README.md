@@ -63,10 +63,18 @@ vot grade --panels runs/panels.jsonl --episodes runs/ep.jsonl
 Data: **[`jang1563/verify-or-trust`](https://huggingface.co/datasets/jang1563/verify-or-trust)** (Hugging Face
 dataset — substrate tables + cells).
 
+## Substrates
+- **`gears_norman`** (public) — ships in the repo (`data/substrates/gears_norman.csv`); runs out of the box.
+- **`state_tahoe`** (Arc, **non-commercial**) — build it from Arc's released model outputs (you accept Arc's terms):
+  ```bash
+  vot build-substrate --substrate state_tahoe --out data/substrates/state_tahoe.csv   # downloads from Arc HF
+  vot panels --substrate-table data/substrates/state_tahoe.csv --out runs/tahoe.jsonl
+  ```
+
 ## Data & licensing
-The benchmark **code** is Apache-2.0. Input data is **not redistributed** — substrate builders download it from
-source: Norman 2019 (public, via GEARS) and Arc STATE/Tahoe (Arc's Hugging Face repo, under Arc's **non-commercial**
-Model License + Acceptable Use Policy, which you must accept). See [`data/README.md`](data/README.md).
+The benchmark **code** is Apache-2.0. Third-party data is **not redistributed** — Norman 2019 (public, via GEARS)
+and Arc STATE/Tahoe (Arc's Hugging Face repo, under Arc's **non-commercial** Model License + Acceptable Use Policy)
+are downloaded from source by the builders. See [`data/README.md`](data/README.md). Results: [`results/RESULTS.md`](results/RESULTS.md).
 
 ## Citation
 See [`CITATION.cff`](CITATION.cff). A preprint describing the benchmark and findings is in preparation.
