@@ -14,7 +14,8 @@ data/raw/
 data/*.h5ad
 *.h5ad
 data/cache/
-data/substrates/state_tahoe*.csv   # Tahoe substrate: regenerate from HF (Arc non-commercial; ~1.3 GB)
+# Tahoe substrate: regenerate from HF (Arc non-commercial; ~1.3 GB)
+data/substrates/state_tahoe*.csv
 
 # local research scratch (not part of the released package)
 research/
