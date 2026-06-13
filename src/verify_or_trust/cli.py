@@ -10,7 +10,20 @@ from __future__ import annotations
 import argparse
 import sys
 
+from .baselines import load_panels, run_baselines
 from .panels import PanelConfig, build_panels, write_panels
+
+
+def _cmd_baselines(a: argparse.Namespace) -> int:
+    res = run_baselines(load_panels(a.panels), lam=a.lam)
+    print(f"baselines on {res['n_panels']} panels (lambda={res['lam']})")
+    print(f"  {'policy':12s} {'acc':>7s} {'assay/g':>8s} {'net':>7s}")
+    for name, m in res["policies"].items():
+        print(f"  {name:12s} {m['accuracy']:>7.1%} {m['assays_per_gene']:>8.0%} {m['net']:>7.2f}")
+    k = res["k1"]
+    print(f"  K1: oracle {k['oracle_acc']:.1%} vs random {k['random_acc']:.1%} at equal budget "
+          f"-> gap {k['gap']:+.1%} -> {'PASS' if k['passed'] else 'FAIL'}")
+    return 0 if k["passed"] else 1
 
 
 def _cmd_panels(a: argparse.Namespace) -> int:
@@ -39,7 +52,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--seed", type=int, default=13)
     p.set_defaults(func=_cmd_panels)
 
-    for name in ("baselines", "grade", "run"):
+    b = sub.add_parser("baselines", help="LLM-free baseline policies (the K1 value proof)")
+    b.add_argument("--panels", required=True)
+    b.add_argument("--lam", type=float, default=0.5)
+    b.set_defaults(func=_cmd_baselines)
+
+    for name in ("grade", "run"):
         sub.add_parser(name, help=f"{name} (wired in a later release step)")
 
     args = parser.parse_args(argv)

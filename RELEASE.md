@@ -9,7 +9,7 @@ hardcoded paths, no private deps, no secrets; licensed data is downloaded-from-s
 | 2 | repo skeleton (pkg, pyproject, license, CLI, stubs) | `pip install -e .` + `pytest` green | ✅ |
 | 3a | panels builder + CLI | panels regenerate research set faithfully (110 panels, gene-set & n_wrong match) + fixture tests | ✅ |
 | 3b | substrate builders (state_tahoe download+join; gears_norman download+train, heavy) | tahoe builder runs from Arc HF; gears builder dry-checks | ☐ |
-| 4 | baselines | K1 reproduces (oracle ≫ random on accuracy-per-assay) | ☐ |
+| 4 | baselines | K1 reproduces on research panels (oracle +23.4% vs random) + fixture tests | ✅ |
 | 5 | grader | re-grades committed episode outputs to the published numbers | ☐ |
 | 6 | env + tools (live DE, query_gene, Anthropic SDK, key via env) | mocked-LLM dry-run valid; small real run matches research | ☐ |
 | 7 | CARD + README + results tables (with caveats) | "stranger" read-through: quickstart runs as written | ☐ |
