@@ -1,7 +1,14 @@
 # Verify-or-Trust
 
+![python](https://img.shields.io/badge/python-3.10%2B-blue)
+![license](https://img.shields.io/badge/license-Apache--2.0-green)
+![status](https://img.shields.io/badge/status-research%20preview-orange)
+
 **A verifiable-reward agentic benchmark: when an LLM orchestrates a fallible biology foundation model, does it
 know where to _trust_ the model versus _run the real experiment_?**
+
+📋 Data schemas & a programmatic-API example: [`SCHEMA.md`](SCHEMA.md) · [`examples/quickstart.py`](examples/quickstart.py).
+Findings & honest limitations: [`CARD.md`](CARD.md). Build/verify process: [`RELEASE.md`](RELEASE.md).
 
 A perturbation foundation model (e.g. GEARS, Arc STATE) predicts which genes a perturbation changes — fast, but
 sometimes confidently wrong. An LLM agent is given those predictions, a panel of candidate genes, and a costly

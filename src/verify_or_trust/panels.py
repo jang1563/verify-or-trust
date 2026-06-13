@@ -12,6 +12,7 @@ Input: a substrate table with one row per (perturbation, gene) edge and columns
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 
 import numpy as np
@@ -89,6 +90,7 @@ def build_panels(substrate: "pd.DataFrame | str", cfg: PanelConfig | None = None
 
 
 def write_panels(panels: list[dict], path: str) -> None:
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w") as f:
         for rec in panels:
             f.write(json.dumps(rec) + "\n")

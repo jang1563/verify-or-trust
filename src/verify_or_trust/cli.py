@@ -33,6 +33,8 @@ def _cmd_run(a: argparse.Namespace) -> int:
     live_de = LiveDE(a.real_de) if a.real_de else None
     genedb = GeneDB(a.query_gene) if a.query_gene else None
     client = anthropic.Anthropic()  # key from ANTHROPIC_API_KEY
+    import os
+    os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     with open(a.out, "w") as fh:
         for i, p in enumerate(panels, 1):
             rec = run_episode(client, a.model, p, lam=a.lam, live_de=live_de, genedb=genedb)

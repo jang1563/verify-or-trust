@@ -17,3 +17,11 @@ def test_build_panels_structure(make_substrate):
 def test_build_panels_deterministic(make_substrate):
     sub = make_substrate()
     assert build_panels(sub, PanelConfig(seed=7)) == build_panels(sub, PanelConfig(seed=7))
+
+
+def test_write_panels_creates_parent_dir(make_substrate, tmp_path):
+    from verify_or_trust.panels import write_panels
+    panels = build_panels(make_substrate(), PanelConfig(seed=1))
+    out = tmp_path / "nested" / "deep" / "panels.jsonl"     # parent dirs do not exist
+    write_panels(panels, str(out))
+    assert out.exists() and out.read_text().count("\n") == len(panels)

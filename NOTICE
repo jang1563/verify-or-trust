@@ -1,0 +1,12 @@
+Verify-or-Trust
+Copyright 2026 Jihoon Kim
+
+This product includes software developed by Jihoon Kim, licensed under the
+Apache License, Version 2.0.
+
+Third-party data (downloaded from source by the substrate builders; NOT included
+in this repository) retains its own license:
+  - Norman et al. 2019 perturb-seq (GEO GSE133344) — public.
+  - GEARS (Roohani, Huang & Leskovec, Nat. Biotechnology 2024) — MIT.
+  - Arc Institute STATE / Tahoe — Arc Model License + Acceptable Use Policy (NON-COMMERCIAL).
+See data/README.md for provenance.
