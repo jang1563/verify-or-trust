@@ -47,10 +47,15 @@ def grade_episodes(panels: list[dict], episodes: list[dict], lam: float = 0.5) -
             gs = pmap.get(r["perturbation"])
             if gs is None:
                 continue
-            n = len(gs); ver = set(r["verified"]); calls = r["calls"]
+            n = len(gs)
+            ver = set(r["verified"])
+            calls = r["calls"]
             nc = sum(1 for gn, g in gs.items() if _MAP.get((calls.get(gn) or {}).get("call")) == g["real_call"])
             nu = sum(1 for gn in gs if _MAP.get((calls.get(gn) or {}).get("call")) == "untested")
-            accs.append(nc / n); des.append(len(ver) / n); nets.append(nc - lam * len(ver)); unts.append(nu / n)
+            accs.append(nc / n)
+            des.append(len(ver) / n)
+            nets.append(nc - lam * len(ver))
+            unts.append(nu / n)
             wrong = {gn for gn, g in gs.items() if not g["fm_correct"]}
             if ver:
                 vps.append(len([x for x in ver if x in wrong]) / len(ver))

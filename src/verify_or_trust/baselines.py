@@ -38,11 +38,14 @@ def run_baselines(panels: list[dict], lam: float = 0.5, seed: int = 0,
     def run(policy, reps=1):
         accs, des, nets = [], [], []
         for pan in panels:
-            gs = pan["panel"]; n = len(gs)
+            gs = pan["panel"]
+            n = len(gs)
             for _ in range(reps):
                 S = policy(gs)
                 nc, nd = _acc_cost(gs, S)
-                accs.append(nc / n); des.append(nd / n); nets.append(nc - lam * nd)
+                accs.append(nc / n)
+                des.append(nd / n)
+                nets.append(nc - lam * nd)
         return dict(accuracy=float(np.mean(accs)), assays_per_gene=float(np.mean(des)), net=float(np.mean(nets)))
 
     fixed = {
@@ -56,14 +59,16 @@ def run_baselines(panels: list[dict], lam: float = 0.5, seed: int = 0,
     frontier = {}
     for frac in (0.1, 0.2, 0.3, 0.4, 0.5):
         def rand_k(gs, _f=frac):
-            k = max(1, round(_f * len(gs))); return list(rng.permutation(len(gs))[:k])
+            k = max(1, round(_f * len(gs)))
+            return list(rng.permutation(len(gs))[:k])
 
         def mag_k(gs, _f=frac):
             k = max(1, round(_f * len(gs)))
             return list(np.argsort([-abs(g["fm_log2FC"]) for g in gs])[:k])
 
         def oracle_k(gs, _f=frac):
-            k = max(1, round(_f * len(gs))); return _wrong_idx(gs)[:k]
+            k = max(1, round(_f * len(gs)))
+            return _wrong_idx(gs)[:k]
 
         frontier[frac] = {"random": run(rand_k, reps=5), "fm_magnitude": run(mag_k),
                           "oracle_capped": run(oracle_k)}
@@ -72,7 +77,8 @@ def run_baselines(panels: list[dict], lam: float = 0.5, seed: int = 0,
     mean_wrong_frac = float(np.mean([pan["n_wrong"] / pan["n_panel"] for pan in panels]))
 
     def rand_atwrong(gs):
-        k = max(1, round(mean_wrong_frac * len(gs))); return list(rng.permutation(len(gs))[:k])
+        k = max(1, round(mean_wrong_frac * len(gs)))
+        return list(rng.permutation(len(gs))[:k])
 
     oracle_acc = results["oracle"]["accuracy"]
     random_acc = run(rand_atwrong, reps=5)["accuracy"]
