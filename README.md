@@ -38,13 +38,23 @@ pip install -e ".[agent]"   # + the LLM agent loop (Anthropic SDK)
 ```
 
 ## Quickstart
+The GEARS/Norman substrate ships in the repo, so panels + the LLM-free value proof run with no downloads:
 ```bash
-vot panels    --substrate gears_norman --out runs/panels.jsonl   # build evaluation panels (downloads source data)
+make reproduce                                                     # vot panels + vot baselines (K1) — deterministic
+# or explicitly:
+vot panels    --substrate-table data/substrates/gears_norman.csv --out runs/panels.jsonl
 vot baselines --panels runs/panels.jsonl                          # LLM-free value proof (K1)
-export ANTHROPIC_API_KEY=...                                       # for the agent run
-vot run       --panels runs/panels.jsonl --model <model> --real-de runs/cells.h5ad --out runs/ep.jsonl
-vot grade     --panels runs/panels.jsonl --episodes runs/ep.jsonl
 ```
+For the agent run + the live `run_de` tool, fetch the perturb-seq cells from the dataset and provide a key:
+```bash
+huggingface-cli download jang1563/verify-or-trust --repo-type dataset --local-dir vot_data  # cells (+substrates)
+export ANTHROPIC_API_KEY=...
+vot run   --panels runs/panels.jsonl --model <model> --real-de vot_data/cells/norman_subset.h5ad --out runs/ep.jsonl
+vot grade --panels runs/panels.jsonl --episodes runs/ep.jsonl
+```
+
+Data: **[`jang1563/verify-or-trust`](https://huggingface.co/datasets/jang1563/verify-or-trust)** (Hugging Face
+dataset — substrate tables + cells).
 
 ## Data & licensing
 The benchmark **code** is Apache-2.0. Input data is **not redistributed** — substrate builders download it from

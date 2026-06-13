@@ -14,5 +14,5 @@ hardcoded paths, no private deps, no secrets; licensed data is downloaded-from-s
 | 6 | env + tools (live DE, query_gene, equivalence, Anthropic SDK, key via env) | mocked-LLM dry-run + LIVE 1-panel run + grade all green | ✅ |
 | 7 | CARD + README + results tables (with caveats) | "stranger" read-through: quickstart runs as written | ☐ |
 | 8 | Makefile reproduce (panels + K1 from committed GEARS substrate) | clean checkout: panels + K1 reproduce (+23.4%) | ✅ |
-| 9 | private GitHub (jang1563/verify-or-trust) ✅ pushed; private HF dataset: pending (needs HF login/token) | ◑ |
+| 9 | private GitHub (jang1563/verify-or-trust) + private HF dataset (jang1563/verify-or-trust) — both pushed | ✅ |
 | 10 | flip public | separate decision | ☐ |
