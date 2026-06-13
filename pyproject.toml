@@ -9,7 +9,7 @@ description = "A verifiable-reward agentic benchmark: does an LLM correctly allo
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
-authors = [{ name = "Jihoon Kim" }]
+authors = [{ name = "JangKeun Kim" }]
 keywords = [
     "agentic-evaluation", "llm", "foundation-models", "single-cell",
     "perturbation", "verifiable-rewards", "computational-biology", "benchmark",

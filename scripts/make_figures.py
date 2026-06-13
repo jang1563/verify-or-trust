@@ -11,14 +11,15 @@ from matplotlib import font_manager  # noqa: F401  (ensures default fonts load)
 
 OUT = "results/capability_inversion.png"
 
-# GEARS/Norman, 110 panels, λ=0.5 (net reward = correct - λ*assays)
-TRUST_ALL, ORACLE = 16.71, 21.60
+# GEARS/Norman, 107 deduped panels, λ=0.5 (net reward = correct - λ*assays)
+TRUST_ALL, ORACLE = 17.81, 21.88
 MODELS = ["Haiku 4.5", "Sonnet 4.6", "Opus 4.8"]
-NET = [14.34, 14.14, 13.35]
-ASSAY = [41, 61, 76]
+NET = [16.24, 16.64, 14.86]          # Opus (frontier) nets least, sig. below both smaller models (p<1e-4)
+ASSAY = [39, 47, 78]
 # Opus net under each condition: no signal / + domain knowledge / + learned signal / + ideal signal
+# (no-signal is the deduped re-run; the signal conditions are pre-dedup, shown for direction)
 COND = ["no signal", "+ gene\nknowledge", "+ learned\nsignal", "+ ideal\nsignal"]
-COND_NET = [13.35, 13.19, 15.30, 17.03]
+COND_NET = [14.86, 13.19, 15.30, 17.03]
 COND_COLOR = ["#b0b0b0", "#d98a8a", "#5b8def", "#2f6fd0"]
 
 plt.rcParams.update({"font.size": 11})
@@ -36,7 +37,7 @@ for xi, (m, nt, a) in enumerate(zip(MODELS, NET, ASSAY)):
     axA.annotate(f"{nt:.1f}  ({a}% assayed)", (xi, nt), textcoords="offset points", xytext=(0, 12),
                  ha="center", fontsize=8.8, color="#333")
 # annotation lives in the empty band between the two reference lines (clear of both lines and the legend)
-axA.annotate("capability inversion:\nmore capable → over-verifies → worse net", (1.0, 18.9), ha="center",
+axA.annotate("frontier inversion:\nthe most capable model over-verifies → worst net", (1.0, 19.2), ha="center",
              fontsize=9.3, color="#c0392b", fontweight="bold")
 axA.set_xticks(list(x))
 axA.set_xticklabels(MODELS)
@@ -52,7 +53,7 @@ axB.axhline(TRUST_ALL, color="#e07b39", ls="--", lw=1.4)
 axB.bar(xb, COND_NET, color=COND_COLOR, width=0.62, zorder=3)
 for xi, v in zip(xb, COND_NET):
     axB.annotate(f"{v:.1f}", (xi, v), textcoords="offset points", xytext=(0, 4), ha="center", fontsize=9.5)
-axB.text(-0.45, TRUST_ALL + 0.08, "trust-all (16.7)", color="#e07b39", fontsize=8.6, va="bottom")
+axB.text(-0.45, TRUST_ALL + 0.08, "trust-all (17.8)", color="#e07b39", fontsize=8.6, va="bottom")
 axB.set_xlim(-0.6, 3.6)
 axB.set_xticks(list(xb))
 axB.set_xticklabels(COND, fontsize=9.5)

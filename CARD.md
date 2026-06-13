@@ -22,8 +22,8 @@ stratified so a directed allocator provably beats random/brute-force (the pre-re
 - **capability spectrum**: where models land between trust-all and oracle.
 
 ## Baselines (LLM-free)
-trust-all, brute-force, random-K, FM-magnitude, oracle. K1: oracle beats random by ≈ +23% accuracy at equal cost
-on GEARS/Norman (and the FM-magnitude heuristic is *worse* than random — a substrate property worth knowing).
+trust-all, brute-force, random-K, FM-magnitude, oracle. K1: oracle beats random by ≈ +21% accuracy at equal cost
+on GEARS/Norman (107 deduped panels; and the FM-magnitude heuristic is *worse* than random — a substrate property).
 
 ## Substrates
 - **gears_norman** (public): GEARS on Norman 2019; live `run_de` on 91k cells; real gene symbols (`query_gene`
@@ -33,9 +33,10 @@ on GEARS/Norman (and the FM-magnitude heuristic is *worse* than random — a sub
 
 ## Findings (research)
 - **No model allocates well**; verify-decision predicts FM-wrongness only weakly (AUC 0.56–0.59).
-- **Capability inversion**: assay rate rises with capability (Haiku 41% → Opus 76%) but targeting does not, so
-  under cost the strongest model nets *least* (paired Opus−Haiku −0.98±0.36, t=−2.8); replicates and sharpens
-  under real execution.
+- **Frontier-model inversion**: assay rate rises with capability (Haiku 39% → Opus 78%) but targeting does not, so
+  under cost the **frontier** model (Opus) nets *least* — significantly below both smaller models (paired Opus−Haiku
+  −1.38±0.29 t=−4.70; Opus−Sonnet −1.78 t=−6.48; p<10⁻⁴), which tie. (A significant frontier inversion, not a strict
+  monotone trend; it strengthened on the deduped data.)
 - **A per-gene reliability signal fixes it**: given one (even an imperfect learned one, AUC 0.70), models follow
   it near-fully (94–99% of assays) → targeting and net rise, inversion reverses; orchestration net scales with
   the **signal's** quality, not the LLM's. **Domain knowledge (`query_gene`) does not fix allocation.**

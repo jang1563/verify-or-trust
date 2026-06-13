@@ -3,7 +3,7 @@ message: "If you use Verify-or-Trust, please cite it as below."
 title: "Verify-or-Trust: a verifiable-reward agentic benchmark for biology foundation-model orchestration"
 authors:
   - family-names: Kim
-    given-names: Jihoon
+    given-names: JangKeun
 version: 0.1.0
 date-released: 2026-06-12
 license: Apache-2.0

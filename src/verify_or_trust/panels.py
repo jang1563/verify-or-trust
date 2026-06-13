@@ -42,6 +42,7 @@ def build_panels(substrate: "pd.DataFrame | str", cfg: PanelConfig | None = None
     """Build stratified panels from a substrate table (DataFrame or CSV path)."""
     cfg = cfg or PanelConfig()
     df = pd.read_csv(substrate) if isinstance(substrate, str) else substrate.copy()
+    df = df.drop_duplicates()                 # one row per edge — guards any substrate against exact-duplicate rows
     rng = np.random.default_rng(cfg.seed)
 
     df = df[df["real_label"].isin(["POSITIVE", "TESTED_NEGATIVE"])].copy()

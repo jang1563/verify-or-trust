@@ -41,16 +41,19 @@ orchestrator (capability inversion). Domain knowledge (`query_gene`) does not fi
 reliability signal does (they follow it near-perfectly). **The bottleneck is the foundation model exposing
 calibrated uncertainty, not the LLM's reasoning.**
 
-| GEARS/Norman, 110 panels, λ=0.5 | accuracy | assays | net | verify-precision |
+| GEARS/Norman, 107 panels, λ=0.5 | accuracy | assays | net | verify-precision |
 |---|---:|---:|---:|---:|
-| trust-all (never verify) | 63% | 0% | 16.7 | — |
-| Haiku 4.5 | 81% | 41% | 14.3 | 43% |
-| Sonnet 4.6 | 90% | 61% | 14.1 | 42% |
-| Opus 4.8 | 95% | 76% | **13.4** | 39% |
-| oracle (verify iff FM wrong) | 100% | 37% | **21.6** | 100% |
+| trust-all (never verify) | 68% | 0% | 17.8 | — |
+| Haiku 4.5 | 82% | 39% | 16.2 | 38% |
+| Sonnet 4.6 | 87% | 47% | 16.6 | 44% |
+| Opus 4.8 | 96% | 78% | **14.9** | 36% |
+| oracle (verify iff FM wrong) | 100% | 32% | **21.9** | 100% |
 
-Verify-precision ≈ the 37% base rate → no targeting; net *falls* as capability rises (all below just trusting the
-FM). Add a learned reliability signal and net rises + the inversion disappears. Full tables + honest caveats:
+*All rows are the deduplicated 107-panel run (2026-06-13); trust-all/oracle reproduce LLM-free via `make reproduce`, the model rows via `vot run`.*
+
+Verify-precision ≈ the 32% base rate → no targeting; the **frontier** model (Opus) over-verifies 78% and nets
+**least** — significantly below both smaller models (Opus−Haiku t=−4.70, Opus−Sonnet t=−6.48, p<10⁻⁴) and below just
+trusting the FM. Add a learned reliability signal and net rises + the inversion disappears. Full tables + caveats:
 [`results/RESULTS.md`](results/RESULTS.md) · [`CARD.md`](CARD.md).
 
 ## Install
