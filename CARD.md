@@ -1,7 +1,7 @@
 # Benchmark card — Verify-or-Trust
 
-> Numbers below are from the research runs (3 Anthropic models, 2026-06); they are reproduced inside this repo as
-> each component lands (see `RELEASE.md`). Read with the **Limitations** section — it is not an afterthought.
+> Numbers are from runs on Anthropic Haiku 4.5 / Sonnet 4.6 / Opus 4.8 (2026-06), reproducible via the harness
+> (`vot run` / `make reproduce`). Read with the **Limitations** section — it is not an afterthought.
 
 ## Task
 Given a perturbation, a readout panel of N genes, and a foundation model's predicted effect per gene, an LLM

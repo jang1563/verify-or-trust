@@ -21,11 +21,18 @@ __all__ = ["build_substrate"]
 _SHIPPED = "data/substrates/gears_norman.csv"
 
 
+class HeavyRegenerationRequired(RuntimeError):
+    """Raised to direct callers to the shipped table instead of the heavy from-scratch GPU regeneration."""
+
+
 def build_substrate(*args, **kwargs):
-    raise NotImplementedError(
-        "The GEARS/Norman substrate ships ready-to-use at "
-        f"'{_SHIPPED}' (also on the Hugging Face dataset) -- use it directly:\n"
-        f"    vot panels --substrate-table {_SHIPPED}\n"
-        "Regenerating from scratch is a heavy GPU pipeline (train GEARS + compute sceptre labels); see this "
-        "module's docstring and eval/06_gears_norman.py in the research repository."
+    """The GEARS/Norman substrate ships ready-to-use; this from-scratch path is intentionally not auto-run.
+
+    Use the shipped table directly (it is the same artifact this would regenerate):
+        vot panels --substrate-table data/substrates/gears_norman.csv
+    Regenerating requires a GPU pipeline (train GEARS + compute sceptre labels) — see the module docstring.
+    """
+    raise HeavyRegenerationRequired(
+        f"Use the shipped table: vot panels --substrate-table {_SHIPPED}  "
+        "(regenerating from scratch is a GPU pipeline — train GEARS + sceptre labels; see the module docstring)."
     )

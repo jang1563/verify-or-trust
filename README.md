@@ -2,7 +2,8 @@
 
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-Apache--2.0-green)
-![status](https://img.shields.io/badge/status-research%20preview-orange)
+![ci](https://github.com/jang1563/verify-or-trust/actions/workflows/ci.yml/badge.svg)
+![reproducible](https://img.shields.io/badge/reproducible-make%20reproduce-green)
 
 **A verifiable-reward agentic benchmark: when an LLM orchestrates a fallible biology foundation model, does it
 know where to _trust_ the model versus _run the real experiment_?**
@@ -17,9 +18,9 @@ sometimes confidently wrong. An LLM agent is given those predictions, a panel of
 real experiment — and the cost of the assay makes **verification allocation** the skill under test: spend the
 budget where the foundation model is actually wrong.
 
-> Status: **research preview (private).** The harness is being ported from the research code with a verification
-> gate at each step (see `RELEASE.md`); numbers below are from the research runs and are reproduced in-repo as
-> each component lands.
+> Built with a verification gate at every step (`RELEASE.md`): a clean clone reproduces the LLM-free value proof
+> with `make reproduce`, every metric is backed by a test or a one-command run, and no third-party data is
+> redistributed. Private during review; a preprint is in preparation.
 
 ## Why this benchmark
 Most agentic-bio evals score whether the model gets the answer. This one isolates a capability that decides
@@ -35,11 +36,23 @@ Frontier models **do not allocate verification** to where the foundation model e
 *more capable models over-verify more*, so under a realistic assay cost the strongest model is the **worst**
 orchestrator (capability inversion). Domain knowledge (`query_gene`) does not fix it; an explicit per-gene
 reliability signal does (they follow it near-perfectly). **The bottleneck is the foundation model exposing
-calibrated uncertainty, not the LLM's reasoning.** Full results and the honest caveats are in [`CARD.md`](CARD.md).
+calibrated uncertainty, not the LLM's reasoning.**
+
+| GEARS/Norman, 110 panels, λ=0.5 | accuracy | assays | net | verify-precision |
+|---|---:|---:|---:|---:|
+| trust-all (never verify) | 63% | 0% | 16.7 | — |
+| Haiku 4.5 | 81% | 41% | 14.3 | 43% |
+| Sonnet 4.6 | 90% | 61% | 14.1 | 42% |
+| Opus 4.8 | 95% | 76% | **13.4** | 39% |
+| oracle (verify iff FM wrong) | 100% | 37% | **21.6** | 100% |
+
+Verify-precision ≈ the 37% base rate → no targeting; net *falls* as capability rises (all below just trusting the
+FM). Add a learned reliability signal and net rises + the inversion disappears. Full tables + honest caveats:
+[`results/RESULTS.md`](results/RESULTS.md) · [`CARD.md`](CARD.md).
 
 ## Install
 ```bash
-git clone <repo> && cd verify-or-trust
+git clone https://github.com/jang1563/verify-or-trust && cd verify-or-trust
 pip install -e .            # core (panels, baselines, grading)
 pip install -e ".[agent]"   # + the LLM agent loop (Anthropic SDK)
 ```
