@@ -8,11 +8,39 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 
 from .baselines import load_panels, run_baselines
 from .grade import grade_episodes, load_episodes
 from .panels import PanelConfig, build_panels, write_panels
+
+
+def _cmd_run(a: argparse.Namespace) -> int:
+    import os
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print("error: set ANTHROPIC_API_KEY in the environment.", file=sys.stderr)
+        return 2
+    try:
+        import anthropic
+    except ImportError:
+        print("error: install the agent extra:  pip install -e '.[agent]'", file=sys.stderr)
+        return 2
+    from .env import run_episode
+    from .tools import GeneDB, LiveDE
+
+    panels = load_panels(a.panels)
+    live_de = LiveDE(a.real_de) if a.real_de else None
+    genedb = GeneDB(a.query_gene) if a.query_gene else None
+    client = anthropic.Anthropic()  # key from ANTHROPIC_API_KEY
+    with open(a.out, "w") as fh:
+        for i, p in enumerate(panels, 1):
+            rec = run_episode(client, a.model, p, lam=a.lam, live_de=live_de, genedb=genedb)
+            fh.write(json.dumps(rec) + "\n"); fh.flush()
+            print(f"[vot] {i}/{len(panels)} {p['perturbation']} de={rec['n_de']} calls={rec['submitted_n']}",
+                  file=sys.stderr)
+    print(f"[vot] wrote {len(panels)} episodes -> {a.out}")
+    return 0
 
 
 def _cmd_grade(a: argparse.Namespace) -> int:
@@ -75,7 +103,14 @@ def main(argv: list[str] | None = None) -> int:
     gr.add_argument("--lam", type=float, default=0.5)
     gr.set_defaults(func=_cmd_grade)
 
-    sub.add_parser("run", help="run (wired in release step 6)")
+    rn = sub.add_parser("run", help="run the agentic environment with an LLM (needs the 'agent' extra)")
+    rn.add_argument("--panels", required=True)
+    rn.add_argument("--model", required=True)
+    rn.add_argument("--lam", type=float, default=0.5)
+    rn.add_argument("--out", default="episodes.jsonl")
+    rn.add_argument("--real-de", help="path to perturb-seq cells h5ad; run_de computes live DE on the cells")
+    rn.add_argument("--query-gene", help="path to a gene-annotation cache json; enables the query_gene DB tool")
+    rn.set_defaults(func=_cmd_run)
 
     args = parser.parse_args(argv)
     if not args.command:
