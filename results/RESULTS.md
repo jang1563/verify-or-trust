@@ -23,10 +23,11 @@ than random (the FM errs at low predicted magnitude). The benchmark discriminate
 | Sonnet | 87.2% | 47% | 16.64 | 44% | 83.5% |
 | Opus | 95.8% | 78% | **14.86** | 36% | 93.5% |
 
-Verify-precision sits near the base rate (~32%) for every model — **no targeting**; accuracy ≈ a random allocator at
-the same budget. Assay rate rises with capability (Haiku 39% → Opus 78%) while targeting does not, so once
-verification is costly the **frontier** model nets least: at λ=0.5, paired **Opus−Haiku −1.38 (t=−4.70)** and
-**Opus−Sonnet −1.78 (t=−6.48)**, p<10⁻⁴ (Haiku ≈ Sonnet, n.s.).
+Targeting is **weak, only a little above chance** — the verify decision predicts FM-wrongness at verify-decision AUC
+0.55–0.62 (Sonnet most, its verified set 1.34× enriched for FM-wrong vs base; Haiku/Opus ~1.1×), and each model's
+accuracy ≈ a random allocator at the same budget. Assay rate rises with capability (Haiku 39% → Opus 78%) while
+targeting stays near-chance, so once verification is costly the **frontier** model nets least: at λ=0.5, paired
+**Opus−Haiku −1.38 (t=−4.70)** and **Opus−Sonnet −1.78 (t=−6.48)**, p<10⁻⁴ (Haiku ≈ Sonnet, n.s.).
 
 **The inversion is cost-conditional** — it is the over-verification, not capability per se, that costs:
 | net by λ | λ=0.2 | λ=0.5 | λ=0.8 |
@@ -58,11 +59,12 @@ foundation model exposing calibrated uncertainty, not the LLM's reasoning (which
   assay costs more).
 - **Arc STATE / Tahoe** (a real released foundation model, drug modality; 160 panels, deduplicated 2026-06-13):
   the over-verification **mechanism echoes**, but the capability ordering does *not* transfer cleanly. At λ=0.5 the
-  strongest model nets below the weakest (Opus 6.82 < Haiku 10.46), with no targeting (vPrec at base) and assay rising
-  with capability (Haiku 37% → Opus 64%). Across the λ-sweep the **weakest** model (Haiku) is best at *every* cost
-  while the two larger models stay below it and even swap order with λ — i.e. "weakest-model-best," not a monotone
-  ladder; Sonnet also hedges 24% of calls to *untested* on this harder integer-gene-id substrate. What crosses
-  substrates is the **mechanism** (capability buys no targeting; over-verifying is punished under cost), not the ladder.
+  strongest model nets below the weakest (Opus 6.82 < Haiku 10.46), with near-base targeting and assay rising with
+  capability (Haiku 37% → Opus 64%). Re-grading the episodes across λ, the **weakest** model (Haiku) is best at every
+  cost while Sonnet and Opus both stay below it with an unstable relative order — i.e. "weakest-model-best," not a
+  monotone ladder; Sonnet also hedges 24% of calls to *untested* on this harder integer-gene-id substrate. What
+  crosses substrates is the **mechanism** (capability buys no better targeting; over-verifying is punished under
+  cost), not the ladder.
 
 ## Can RL *train* an orchestrator to allocate? (extension — a verifiable-reward study)
 The reward here is verifiable, so the env doubles as an RL gym. We trained a small policy (Qwen2.5-7B, LoRA, GRPO)
@@ -76,8 +78,9 @@ with a proper-scoring (RLCR-style) verifiable reward + a binary-reward ablation,
 | **linear probe on the cold 7B's hidden states** | **0.67** | — | — |
 
 RL does **not** internalize the signal — it converges to the trivial trust-all policy (net = always-trust). But a
-linear probe on the cold model's *representation* recovers the signal at **AUC 0.67** (≈ the GBM, far above the RL'd
-policy 0.51): the reliability signal is **present and recoverable in the LLM — RL just fails to surface it into
+linear probe on the cold model's *representation* recovers the signal at **AUC 0.67** (the best of several layers ×
+poolings, range ~0.63–0.67; ≈ the GBM, far above the RL'd policy 0.51): the reliability signal is **present and
+recoverable in the LLM — RL just fails to surface it into
 behavior** (a policy-extraction failure, not a representation one). Deployable takeaway: **read the signal out** (an
 external classifier, or a probe of the orchestrator's hidden states) rather than relying on the behavioral policy —
 the same conclusion the frontier-model rows reach from the opposite (over-verifying) direction.

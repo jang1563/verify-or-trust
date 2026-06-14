@@ -32,7 +32,9 @@ on GEARS/Norman (107 deduped panels; and the FM-magnitude heuristic is *worse* t
   replicates on a real released foundation model and a drug-perturbation modality.
 
 ## Findings (research)
-- **No model allocates well**; verify-decision predicts FM-wrongness only weakly (AUC 0.56–0.59).
+- **No model allocates *well***; the verify decision predicts FM-wrongness only weakly — verify-decision AUC
+  0.55–0.62 on the clean re-run (Sonnet most-targeted at 0.62, Haiku/Opus ~0.55–0.57) — far below a trained
+  trust-head (0.70). Weak but not zero; "no targeting" would over-state it.
 - **Frontier-model inversion (cost-conditional)**: assay rate rises with capability (Haiku 39% → Opus 78%) but
   targeting does not, so *once verification is costly* the frontier model (Opus) nets *least* — at λ=0.5 significantly
   below both smaller models (paired Opus−Haiku −1.38 t=−4.70; Opus−Sonnet −1.78 t=−6.48; p<10⁻⁴), which tie. The sign
