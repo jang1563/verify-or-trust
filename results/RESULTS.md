@@ -27,7 +27,8 @@ Targeting is **weak, only a little above chance** — the verify decision predic
 0.55–0.62 (Sonnet most, its verified set 1.34× enriched for FM-wrong vs base; Haiku/Opus ~1.1×), and each model's
 accuracy ≈ a random allocator at the same budget. Assay rate rises with capability (Haiku 39% → Opus 78%) while
 targeting stays near-chance, so once verification is costly the **frontier** model nets least: at λ=0.5, paired
-**Opus−Haiku −1.38 (t=−4.70)** and **Opus−Sonnet −1.78 (t=−6.48)**, p<10⁻⁴ (Haiku ≈ Sonnet, n.s.).
+**Opus−Haiku −1.38 (t=−4.70)** and **Opus−Sonnet −1.78 (t=−6.48)**, p<10⁻⁴ (Haiku ≈ Sonnet, n.s.) — both survive Holm–Bonferroni over the 3 pairwise
+tests (adj p < 2×10⁻⁵) and a non-parametric Wilcoxon agrees.
 
 **The inversion is cost-conditional** — it is the over-verification, not capability per se, that costs:
 | net by λ | λ=0.2 | λ=0.5 | λ=0.8 |
@@ -78,8 +79,9 @@ with a proper-scoring (RLCR-style) verifiable reward + a binary-reward ablation,
 | **linear probe on the cold 7B's hidden states** | **0.67** | — | — |
 
 RL does **not** internalize the signal — it converges to the trivial trust-all policy (net = always-trust). But a
-linear probe on the cold model's *representation* recovers the signal at **AUC 0.67** (the best of several layers ×
-poolings, range ~0.63–0.67; ≈ the GBM, far above the RL'd policy 0.51): the reliability signal is **present and
+linear probe on the cold model's *representation* recovers the signal at **AUC 0.67** (this is the best of several
+layers × poolings *selected on the test set*; AUC ranges 0.58–0.67 across them, mean ~0.64 — even the worst is above
+the RL'd policy 0.51; ≈ the GBM, far above the RL'd policy 0.51): the reliability signal is **present and
 recoverable in the LLM — RL just fails to surface it into
 behavior** (a policy-extraction failure, not a representation one). Deployable takeaway: **read the signal out** (an
 external classifier, or a probe of the orchestrator's hidden states) rather than relying on the behavioral policy —
