@@ -33,10 +33,11 @@ on GEARS/Norman (107 deduped panels; and the FM-magnitude heuristic is *worse* t
 
 ## Findings (research)
 - **No model allocates well**; verify-decision predicts FM-wrongness only weakly (AUC 0.56–0.59).
-- **Frontier-model inversion**: assay rate rises with capability (Haiku 39% → Opus 78%) but targeting does not, so
-  under cost the **frontier** model (Opus) nets *least* — significantly below both smaller models (paired Opus−Haiku
-  −1.38±0.29 t=−4.70; Opus−Sonnet −1.78 t=−6.48; p<10⁻⁴), which tie. (A significant frontier inversion, not a strict
-  monotone trend; it strengthened on the deduped data.)
+- **Frontier-model inversion (cost-conditional)**: assay rate rises with capability (Haiku 39% → Opus 78%) but
+  targeting does not, so *once verification is costly* the frontier model (Opus) nets *least* — at λ=0.5 significantly
+  below both smaller models (paired Opus−Haiku −1.38 t=−4.70; Opus−Sonnet −1.78 t=−6.48; p<10⁻⁴), which tie. The sign
+  is cost-dependent: at λ=0.2 Opus is *best* (cheap verification pays off); the inversion appears at λ≥0.5 and deepens.
+  (Significant on the clean re-run; dedup and harness changed together, so we don't attribute the effect size to dedup.)
 - **A per-gene reliability signal fixes it**: given one (even an imperfect learned one, AUC 0.70), models follow
   it near-fully (94–99% of assays) → targeting and net rise, inversion reverses; orchestration net scales with
   the **signal's** quality, not the LLM's. **Domain knowledge (`query_gene`) does not fix allocation.**
