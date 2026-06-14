@@ -3,7 +3,7 @@
 Anthropic Haiku 4.5 / Sonnet 4.6 / Opus 4.8, 2026-06. λ = assay cost. Reproduce the LLM-free rows with
 `make reproduce`; the LLM rows need an API key (`vot run`). Read with [`CARD.md`](../CARD.md) limitations.
 
-> **Status (2026-06-13):** all GEARS rows — K1, frontier-model, reliability-signal (`vot run --reliability-flags`), `query_gene`, live-execution — and the RL/probe extension are refreshed on the **deduplicated** substrate (107 panels, seed 13). Two rows remain unrefreshed and are tagged: the **+perfect-signal** ceiling *[research-only]* (uses ground truth, excluded from the public harness) and the **Tahoe** cross-substrate replication *[pre-dedup]* (a public-flip item).
+> **Status (2026-06-13):** all GEARS rows — K1, frontier-model, reliability-signal (`vot run --reliability-flags`), `query_gene`, live-execution — the **Tahoe** cross-substrate replication, and the RL/probe extension are refreshed on the **deduplicated** substrate (107 panels, seed 13). One row remains tagged: the **+perfect-signal** ceiling *[research-only]* (uses ground truth, excluded from the public harness).
 
 ## K1 — the value proof (LLM-free, GEARS/Norman, 107 panels)
 | policy | accuracy | assays/gene | net@λ0.5 |
@@ -43,8 +43,12 @@ foundation model exposing calibrated uncertainty, not the LLM's reasoning (which
 - **Live `run_de`** (DE computed on the Norman cells; 89% agreement with the sceptre reference; clean 107 panels):
   findings hold and sharpen — Opus 12.44 < Haiku 15.04 net, both below trust-all 17.81 (over-verifying an imperfect
   assay costs more).
-- **Arc STATE / Tahoe** (a real released foundation model, drug modality) *[pre-dedup]*: the allocation failure and capability
-  inversion replicate.
+- **Arc STATE / Tahoe** (a real released foundation model, drug modality; 107 panels, deduplicated 2026-06-13):
+  the allocation failure and over-verification-with-capability **replicate** — verify-precision sits at the base rate
+  for all three (no targeting), assay rate rises with capability (Haiku 37% → Sonnet 44% → Opus 64%), so the strongest
+  model nets below the weakest (Opus 6.82 < Haiku 10.46 net). Honest caveat: not a strict monotone here (Sonnet 5.75
+  dips lowest, hedging 24% of calls to *untested* on this harder integer-gene-id drug substrate), so what crosses
+  substrates is the over-verification *mechanism*, not a clean capability ladder.
 
 ## Can RL *train* an orchestrator to allocate? (extension — a verifiable-reward study)
 The reward here is verifiable, so the env doubles as an RL gym. We trained a small policy (Qwen2.5-7B, LoRA, GRPO)
