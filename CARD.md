@@ -26,7 +26,7 @@ trust-all, brute-force, random-K, FM-magnitude, oracle. K1: oracle beats random 
 on GEARS/Norman (107 deduped panels; and the FM-magnitude heuristic is *worse* than random — a substrate property).
 
 ## Substrates
-- **gears_norman** (public): GEARS on Norman 2019; live `run_de` on 91k cells; real gene symbols (`query_gene`
+- **gears_norman** (public): GEARS on Norman 2019; live `run_de` on 43,955 cells; real gene symbols (`query_gene`
   available).
 - **state_tahoe** (Arc, non-commercial): Arc STATE/ST-HVG-Tahoe released predictions vs real DE; the same finding
   replicates on a real released foundation model and a drug-perturbation modality.
