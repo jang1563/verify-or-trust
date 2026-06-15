@@ -43,6 +43,10 @@ on GEARS/Norman (107 deduped panels; and the FM-magnitude heuristic is *worse* t
 - **A per-gene reliability signal fixes it**: given one (even an imperfect learned one, AUC 0.70), models follow
   it near-fully (94–99% of assays) → targeting and net rise, inversion reverses; orchestration net scales with
   the **signal's** quality, not the LLM's. **Domain knowledge (`query_gene`) does not fix allocation.**
+- **The signal is buildable (no ground truth)**: on the combo regime, disagreement with the observed-additive
+  baseline predicts FM-wrongness at **AUC 0.89** (vs 0.69 for magnitude + regime), cross-fit by perturbation and
+  inference-available; fed into LLM-free signal-gated allocation it approaches the oracle at low budget. So the
+  reliability bottleneck is *engineerable*, not fundamental (`scripts/competence_signal.py`).
 - Read-through: the bottleneck is the foundation model exposing calibrated per-input uncertainty, and the LLM is
   a faithful — but uncritical — follower of whatever reliability signal it is given.
 
@@ -57,7 +61,10 @@ biology pipelines. Diagnosing where LLM × foundation-model orchestration breaks
   failure itself is λ-independent. **Single un-ablated prompt.** **Tool-noise**: the live `run_de` agrees with the
   sceptre reference ≈89% — a real, imperfect assay, not an oracle. **Tahoe** uses anonymized gene indices and a
   50%-wrong panel construction (absolute accuracy is substrate-driven; the *pattern* is what replicates).
-- "Dose-response in signal quality" is three monotone points, one of which is a simulated signal.
+- "Dose-response in signal quality" is three monotone points, one of which is a simulated signal — though the
+  high-AUC point is *separately* shown buildable from inference-available features on the combo regime
+  (`scripts/competence_signal.py`), not only simulated. **Buildable-signal scope**: that result is combos-only
+  (the additive structure does not exist for singles) and LLM-free (allocation by the signal, not an LLM run).
 
 ## Provenance, license, ethics
 Code Apache-2.0; data downloaded-from-source, not redistributed (`data/README.md`); Arc STATE is non-commercial.

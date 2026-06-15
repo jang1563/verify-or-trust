@@ -54,6 +54,38 @@ clean run also changed harness, so dedup and harness are confounded.)
 Orchestration net scales with the **signal's** quality while the LLM follows near-fully — the bottleneck is the
 foundation model exposing calibrated uncertainty, not the LLM's reasoning (which it does not critically evaluate).
 
+## The reliability signal is buildable without ground truth (research extension, LLM-free)
+The dose-response above *supplies* the signal — its AUC-0.85 row is **simulated** (it perturbs the true FM-error
+label; `research/signal_rebaseline.py`). Can such a signal instead be **built** from information available at
+inference? On the GEARS/Norman combo regime (773 edges / 62 perts that decompose into measured singles), predicting
+FM-wrongness cross-fit by perturbation (`scripts/competence_signal.py`; `make competence`, LLM-free, deterministic):
+
+| competence signal (cross-fit by perturbation) | AUC |
+|---|---:|
+| `\|FM pred\|` only | 0.69 |
+| `\|FM pred\|` + regime (≈ the learned trust-head) | 0.69 |
+| **+ disagreement with the observed-additive baseline** | **0.89** |
+
+The lift is the **observed-additive baseline** (additive = measured single-A + single-B effect; the field-standard
+y_A + y_B): the FM is usually right when it agrees with additive and wrong when it deviates, so `|FM − additive|`
+plus sign- and call-disagreement are a strong, cheap, *inference-available* error predictor (no held-out combo
+truth is used as a feature). Fed into an LLM-free signal-gated allocation (verify the top-fraction by predicted
+p(FM-wrong)), the buildable 0.89 signal approaches the **oracle** at low budget:
+
+| net@λ0.5 by verify-budget | trust-FM (0%) | 10% | 20% | 30% |
+|---|---:|---:|---:|---:|
+| random verify | 0.70 | 0.68 | 0.66 | 0.64 |
+| signal 0.69 | 0.70 | 0.71 | 0.70 | 0.69 |
+| **signal 0.89 (buildable)** | 0.70 | **0.74** | **0.76** | **0.76** |
+| oracle | 0.70 | 0.75 | 0.80 | 0.85 |
+
+At a 10% budget the buildable signal ≈ the oracle (0.74 vs 0.75); vRecall of FM-wrong at the base-rate (30%) budget
+is **0.71**, vs 0.47 for the 0.69 signal and 0.31 for random. Combined with the result above — the LLM follows a
+supplied signal 94–99% — this **closes the loop**: the reliability signal the orchestrator needs is *engineerable*,
+not a wall, and a buildable signal drives near-oracle allocation. (Scope: combos only, where the additive structure
+exists; singles need a different cheap baseline. The mechanism is additive-as-proxy — the flip side of the FM's
+small marginal value over additive, see the GEARS-vs-additive regime map.)
+
 ## Holds under real execution + a real Arc model
 - **Live `run_de`** (DE computed on the Norman cells; 89% agreement with the sceptre reference; clean 107 panels):
   findings hold and sharpen — Opus 12.44 < Haiku 15.04 net, both below trust-all 17.81 (over-verifying an imperfect

@@ -53,7 +53,10 @@ calibrated uncertainty, not the LLM's reasoning.**
 
 Verify-precision ≈ the 32% base rate → no targeting; the **frontier** model (Opus) over-verifies 78% and nets
 **least** — significantly below both smaller models (Opus−Haiku t=−4.70, Opus−Sonnet t=−6.48, p<10⁻⁴) and below just
-trusting the FM. Add a learned reliability signal and net rises + the inversion disappears. Full tables + caveats:
+trusting the FM. Add a learned reliability signal and net rises + the inversion disappears — and that signal is **buildable without
+ground truth**: disagreement with the observed-additive baseline predicts FM error at **AUC 0.89** (vs 0.69 for
+magnitude + regime) and drives near-oracle allocation, so the bottleneck is engineerable, not fundamental
+([`scripts/competence_signal.py`](scripts/competence_signal.py)). Full tables + caveats:
 [`results/RESULTS.md`](results/RESULTS.md) · [`CARD.md`](CARD.md).
 
 ## Install
