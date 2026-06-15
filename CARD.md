@@ -67,6 +67,7 @@ biology pipelines. Diagnosing where LLM × foundation-model orchestration breaks
   (the additive structure does not exist for singles) and LLM-free (allocation by the signal, not an LLM run).
 
 ## Provenance, license, ethics
-Code Apache-2.0; data downloaded-from-source, not redistributed (`data/README.md`); Arc STATE is non-commercial.
-No human-subjects data. The biology is published perturbation screens. Intended for research on safe, calibrated
-agentic systems.
+Code Apache-2.0. Arc STATE/Tahoe is non-commercial and **not redistributed** (downloaded from source); Norman 2019
+is public (GEO GSE133344) and a processed cell subset is hosted on the companion HF dataset for reproducibility
+(`data/README.md`). No human-subjects data. The biology is published perturbation screens. Intended for research on
+safe, calibrated agentic systems.

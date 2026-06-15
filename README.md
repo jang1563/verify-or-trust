@@ -19,8 +19,8 @@ real experiment — and the cost of the assay makes **verification allocation** 
 budget where the foundation model is actually wrong.
 
 > Built with a verification gate at every step (`RELEASE.md`): a clean clone reproduces the LLM-free value proof
-> with `make reproduce`, every metric is backed by a test or a one-command run, and no third-party data is
-> redistributed. Private during review; a preprint is in preparation.
+> with `make reproduce`, every metric is backed by a test or a one-command run, and no licensed third-party data
+> is redistributed. Private during review; a preprint is in preparation.
 
 ## Why this benchmark
 Most agentic-bio evals score whether the model gets the answer. This one isolates a capability that decides
@@ -94,9 +94,10 @@ dataset — substrate tables + cells).
   ```
 
 ## Data & licensing
-The benchmark **code** is Apache-2.0. Third-party data is **not redistributed** — Norman 2019 (public, via GEARS)
-and Arc STATE/Tahoe (Arc's Hugging Face repo, under Arc's **non-commercial** Model License + Acceptable Use Policy)
-are downloaded from source by the builders. See [`data/README.md`](data/README.md). Results: [`results/RESULTS.md`](results/RESULTS.md).
+The benchmark **code** is Apache-2.0. The Arc STATE/Tahoe outputs are **not redistributed** (Arc's Hugging Face
+repo, under Arc's **non-commercial** Model License + Acceptable Use Policy; downloaded from source by the builder).
+Norman 2019 is **public** (GEO GSE133344, via GEARS); a processed cell subset is hosted on the companion HF dataset
+for reproducibility of the live assay. See [`data/README.md`](data/README.md). Results: [`results/RESULTS.md`](results/RESULTS.md).
 
 ## Citation
 See [`CITATION.cff`](CITATION.cff). A preprint describing the benchmark and findings is in preparation.

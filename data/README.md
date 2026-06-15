@@ -1,7 +1,13 @@
-# Data — provenance & regeneration (we do not redistribute third-party data)
+# Data — provenance, licensing & regeneration
 
-This benchmark **regenerates** its inputs from source rather than shipping them, to respect upstream licenses.
-Running `vot panels --substrate <name>` downloads what it needs into `data/raw/` and `data/cache/` (git-ignored).
+The benchmark **code** (this Git repo) ships no third-party data; inputs are regenerated from source or pulled from
+the companion Hugging Face dataset, to respect upstream licenses. Running `vot panels --substrate <name>` downloads
+what it needs into `data/raw/` and `data/cache/` (git-ignored).
+
+**What is redistributed, and where:** the companion HF dataset (`jang1563/verify-or-trust`) hosts a *processed
+subset of the **public** Norman 2019 cells* (GEO GSE133344) and the derived `gears_norman` substrate table, for
+reproducibility of the live `run_de` assay. The Arc STATE/Tahoe outputs are **not** redistributed (non-commercial —
+the builder downloads them from Arc's repo under Arc's terms; see below).
 
 ## Substrates
 
@@ -21,6 +27,7 @@ Running `vot panels --substrate <name>` downloads what it needs into `data/raw/`
 - Gene identities in the Tahoe release are integer indices (not symbols), so the `query_gene` knowledge tool is
   not available for this substrate.
 
-## What IS committed here
-Only our own artifacts: the panel manifest schema, small result tables (`../results/`), and tests. No cells, no
-foundation-model outputs, no API keys.
+## What IS committed to this Git repo
+Only our own artifacts: the panel manifest schema, the derived `gears_norman` substrate, small result tables
+(`../results/`), and tests. No cells, no foundation-model outputs, no API keys. (The public Norman cell subset for
+the live assay lives in the companion HF dataset, not here.)
