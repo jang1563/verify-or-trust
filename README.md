@@ -20,7 +20,7 @@ budget where the foundation model is actually wrong.
 
 > Built with a verification gate at every step (`RELEASE.md`): a clean clone reproduces the LLM-free value proof
 > with `make reproduce`, every metric is backed by a test or a one-command run, and no licensed third-party data
-> is redistributed. Private during review; a preprint is in preparation.
+> is redistributed. A preprint is in preparation.
 
 ## Why this benchmark
 Most agentic-bio evals score whether the model gets the answer. This one isolates a capability that decides
