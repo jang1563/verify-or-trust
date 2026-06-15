@@ -9,6 +9,13 @@
     "license": "Apache-2.0",
     "description": "A verifiable-reward benchmark for calibrated verification in LLM-orchestrated biology foundation-model pipelines."
   },
+  "release": {
+    "version": "0.1.0",
+    "tag": "v0.1.0",
+    "release_url": "https://github.com/jang1563/verify-or-trust/releases/tag/v0.1.0",
+    "commit": "718962d12959129593e3190ccf27eab372796435",
+    "dataset_commit": "32c547f422b4a4963a9c39c3b82f40b4a20043a6"
+  },
   "entrypoints": {
     "human_readme": "README.md",
     "benchmark_card": "CARD.md",
