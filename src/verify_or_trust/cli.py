@@ -48,7 +48,7 @@ def _cmd_run(a: argparse.Namespace) -> int:
                      if rel is not None else None)
             rec = run_episode(client, a.model, p, lam=a.lam, live_de=live_de, genedb=genedb,
                               reliability_flags=flags)
-            fh.write(json.dumps(rec) + "\n")
+            fh.write(json.dumps(rec, allow_nan=False) + "\n")
             fh.flush()
             print(f"[vot] {i}/{len(panels)} {p['perturbation']} de={rec['n_de']} calls={rec['submitted_n']}",
                   file=sys.stderr)

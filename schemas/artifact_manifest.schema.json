@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verify-or-Trust Artifact Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generated_date",
+    "project",
+    "entrypoints",
+    "data_artifacts",
+    "schema_files",
+    "reproducibility_commands",
+    "validation_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "generated_date": {
+      "type": "string"
+    },
+    "project": {
+      "type": "object"
+    },
+    "entrypoints": {
+      "type": "object"
+    },
+    "data_artifacts": {
+      "type": "array"
+    },
+    "schema_files": {
+      "type": "array"
+    },
+    "reproducibility_commands": {
+      "type": "array"
+    },
+    "validation_policy": {
+      "type": "object"
+    }
+  }
+}

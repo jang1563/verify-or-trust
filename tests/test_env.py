@@ -1,7 +1,8 @@
 """Environment tests with a mocked LLM (no API calls) + the equivalence tool."""
+import math
 import types
 
-from verify_or_trust.env import run_episode
+from verify_or_trust.env import _build_prompt, run_episode
 from verify_or_trust.panels import PanelConfig, build_panels
 from verify_or_trust.tools import equivalence_test
 
@@ -39,6 +40,14 @@ def test_run_episode_dry(make_substrate):
     assert set(rec["calls"]) == {g["gene"] for g in p["panel"]}
     assert rec["n_de"] == 2                       # assayed exactly the two genes from turn 1
     assert rec["n_turns"] == 2
+
+
+def test_prompt_handles_missing_fm_log2fc(make_substrate):
+    panels = build_panels(make_substrate(), PanelConfig(N=20, min_wrong=3, min_correct=3, seed=1))
+    p = panels[0]
+    p["panel"][0]["fm_log2FC"] = math.nan
+    prompt = _build_prompt(p, lam=0.5, reliability_flags=None)
+    assert "pred_log2FC=missing" in prompt
 
 
 def test_equivalence_tool():

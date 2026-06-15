@@ -1,0 +1,84 @@
+{
+  "schema_version": "0.1.0",
+  "generated_date": "2026-06-15",
+  "project": {
+    "name": "Verify-or-Trust",
+    "repository": "https://github.com/jang1563/verify-or-trust",
+    "dataset": "https://huggingface.co/datasets/jang1563/verify-or-trust",
+    "default_branch": "main",
+    "license": "Apache-2.0",
+    "description": "A verifiable-reward benchmark for calibrated verification in LLM-orchestrated biology foundation-model pipelines."
+  },
+  "entrypoints": {
+    "human_readme": "README.md",
+    "benchmark_card": "CARD.md",
+    "schema_docs": "SCHEMA.md",
+    "release_process": "RELEASE.md",
+    "results": "results/RESULTS.md",
+    "ci_workflow": ".github/workflows/ci.yml",
+    "validator": "scripts/validate_public_release.py"
+  },
+  "data_artifacts": [
+    {
+      "id": "gears_norman_substrate",
+      "path": "data/substrates/gears_norman.csv",
+      "schema": "schemas/substrate_row.schema.json",
+      "format": "csv",
+      "rows": 4008,
+      "provenance": "Norman 2019 perturb-seq via GEARS-derived predictions and held-out real labels."
+    },
+    {
+      "id": "norman_subset_cells",
+      "external_path": "cells/norman_subset.h5ad",
+      "external_home": "https://huggingface.co/datasets/jang1563/verify-or-trust",
+      "format": "h5ad",
+      "rows": 43955,
+      "provenance": "Processed public Norman 2019 cell subset hosted on Hugging Face for live run_de reproduction."
+    }
+  ],
+  "schema_files": [
+    {
+      "id": "artifact_manifest",
+      "path": "schemas/artifact_manifest.schema.json"
+    },
+    {
+      "id": "substrate_row",
+      "path": "schemas/substrate_row.schema.json"
+    },
+    {
+      "id": "panel",
+      "path": "schemas/panel.schema.json"
+    },
+    {
+      "id": "episode",
+      "path": "schemas/episode.schema.json"
+    }
+  ],
+  "reproducibility_commands": [
+    {
+      "id": "install",
+      "command": "pip install -e ."
+    },
+    {
+      "id": "build_panels",
+      "command": "vot panels --substrate-table data/substrates/gears_norman.csv --out runs/panels.jsonl --seed 13",
+      "expected_panels": 107
+    },
+    {
+      "id": "k1_value_proof",
+      "command": "vot baselines --panels runs/panels.jsonl --lam 0.5",
+      "expected_k1_gap": 0.214
+    },
+    {
+      "id": "public_validator",
+      "command": "python3 scripts/validate_public_release.py"
+    }
+  ],
+  "validation_policy": {
+    "strict_generated_jsonl": true,
+    "generated_panel_count": 107,
+    "forbid_nonstandard_json_constants": true,
+    "forbid_stale_publication_framing": true,
+    "allow_missing_fm_log2fc_as_null": true
+  }
+}

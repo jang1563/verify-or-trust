@@ -19,3 +19,10 @@ def test_k1_deterministic(make_substrate):
     a = run_baselines(_panels(make_substrate), seed=0)["k1"]
     b = run_baselines(_panels(make_substrate), seed=0)["k1"]
     assert a == b and "passed" in a
+
+
+def test_baselines_handle_missing_fm_log2fc(make_substrate):
+    panels = _panels(make_substrate)
+    panels[0]["panel"][0]["fm_log2FC"] = None
+    res = run_baselines(panels, seed=0)
+    assert res["k1"]["passed"] in {True, False}

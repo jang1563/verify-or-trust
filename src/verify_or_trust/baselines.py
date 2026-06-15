@@ -10,6 +10,7 @@ on accuracy-per-assay by a clear margin. Run this BEFORE any LLM.
 from __future__ import annotations
 
 import json
+import math
 
 import numpy as np
 
@@ -28,6 +29,14 @@ def _acc_cost(panel: list[dict], verify_idx) -> tuple[int, int]:
 
 def _wrong_idx(panel: list[dict]) -> list[int]:
     return [i for i, g in enumerate(panel) if not g["fm_correct"]]
+
+
+def _fm_abs_log2fc(gene: dict) -> float:
+    try:
+        x = float(gene.get("fm_log2FC", 0.0))
+    except (TypeError, ValueError):
+        return 0.0
+    return abs(x) if math.isfinite(x) else 0.0
 
 
 def run_baselines(panels: list[dict], lam: float = 0.5, seed: int = 0,
@@ -64,7 +73,7 @@ def run_baselines(panels: list[dict], lam: float = 0.5, seed: int = 0,
 
         def mag_k(gs, _f=frac):
             k = max(1, round(_f * len(gs)))
-            return list(np.argsort([-abs(g["fm_log2FC"]) for g in gs])[:k])
+            return list(np.argsort([-_fm_abs_log2fc(g) for g in gs])[:k])
 
         def oracle_k(gs, _f=frac):
             k = max(1, round(_f * len(gs)))

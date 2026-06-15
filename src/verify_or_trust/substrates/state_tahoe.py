@@ -5,7 +5,7 @@ differential expression (`*_real_de.csv`) from the Arc Hugging Face repo, derive
 gene) effect call, and emits a substrate table in the `SCHEMA.md` shape.
 
 IMPORTANT: Arc's model and released data are under a non-commercial Model License + Acceptable Use Policy. This
-builder downloads them at the user's request and does NOT redistribute them; by using it you accept Arc's terms.
+builder downloads them only when invoked locally and does NOT redistribute them; by using it you accept Arc's terms.
 Gene identities in the Tahoe release are integer feature indices (not symbols), so the `query_gene` knowledge tool
 is unavailable for this substrate (and `run_de` here is the released DE, not live cells).
 """

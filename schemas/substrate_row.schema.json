@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verify-or-Trust Substrate Row",
+  "type": "object",
+  "required": [
+    "perturbation",
+    "gene",
+    "fm_log2FC",
+    "fm_call",
+    "real_label",
+    "regime",
+    "raw_log2FC",
+    "raw_se",
+    "raw_q",
+    "n_trt",
+    "n_cntrl"
+  ],
+  "properties": {
+    "perturbation": {
+      "type": "string"
+    },
+    "gene": {
+      "type": "string"
+    },
+    "fm_log2FC": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Foundation-model predicted log2 fold-change; null when the source prediction is missing."
+    },
+    "fm_call": {
+      "enum": [
+        "effect",
+        "no_effect"
+      ]
+    },
+    "real_label": {
+      "enum": [
+        "POSITIVE",
+        "TESTED_NEGATIVE"
+      ]
+    },
+    "regime": {
+      "type": "string"
+    },
+    "raw_log2FC": {
+      "type": "number"
+    },
+    "raw_se": {
+      "type": "number"
+    },
+    "raw_q": {
+      "type": "number"
+    },
+    "n_trt": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "n_cntrl": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

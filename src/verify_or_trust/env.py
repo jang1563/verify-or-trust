@@ -15,6 +15,7 @@ ground truth; that is a research-only probe kept out of the public benchmark.)
 from __future__ import annotations
 
 import json
+import math
 
 from .tools import DELTA, GeneDB, LiveDE, equivalence_test
 
@@ -55,6 +56,14 @@ def tools_spec(with_query: bool = False) -> list[dict]:
     return ts
 
 
+def _format_log2fc(value) -> str:
+    try:
+        x = float(value)
+    except (TypeError, ValueError):
+        return "missing"
+    return f"{x:+.2f}" if math.isfinite(x) else "missing"
+
+
 def _build_prompt(panel: dict, lam: float, reliability_flags: dict | None) -> str:
     genes = panel["panel"]
     lines = [f"Perturbation: {panel['perturbation']} (CRISPRa). Readout panel ({len(genes)} genes). "
@@ -65,7 +74,7 @@ def _build_prompt(panel: dict, lam: float, reliability_flags: dict | None) -> st
             tag = ("  [FM-reliability: UNRELIABLE here]" if reliability_flags.get(g["gene"])
                    else "  [FM-reliability: reliable]")
         verdict = "EFFECT" if g["fm_call"] == "effect" else "no effect"
-        lines.append(f"  {g['gene']}: pred_log2FC={g['fm_log2FC']:+.2f} -> FM says {verdict}{tag}")
+        lines.append(f"  {g['gene']}: pred_log2FC={_format_log2fc(g.get('fm_log2FC'))} -> FM says {verdict}{tag}")
     note = (" Each gene is annotated with the FM's per-gene reliability (informative but imperfect); use it to "
             "decide where assaying is worth the cost." if reliability_flags is not None else "")
     return ("\n".join(lines) + f"\n\nDecide which genes to assay (cost {lam}/gene), then submit a call for all "

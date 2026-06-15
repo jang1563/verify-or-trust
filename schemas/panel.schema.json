@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verify-or-Trust Panel JSONL Record",
+  "type": "object",
+  "required": [
+    "perturbation",
+    "n_panel",
+    "n_wrong",
+    "panel"
+  ],
+  "properties": {
+    "perturbation": {
+      "type": "string"
+    },
+    "n_panel": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "n_wrong": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "panel": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "gene",
+          "fm_log2FC",
+          "fm_call",
+          "real_call",
+          "fm_correct",
+          "stratum",
+          "regime",
+          "raw_log2FC",
+          "raw_se",
+          "raw_q",
+          "n_trt",
+          "n_cntrl"
+        ],
+        "properties": {
+          "gene": {
+            "type": "string"
+          },
+          "fm_log2FC": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "fm_call": {
+            "enum": [
+              "effect",
+              "no_effect"
+            ]
+          },
+          "real_call": {
+            "enum": [
+              "effect",
+              "no_effect"
+            ]
+          },
+          "fm_correct": {
+            "type": "boolean"
+          },
+          "stratum": {
+            "enum": [
+              "correct_effect",
+              "correct_noeffect",
+              "wrong_FN",
+              "wrong_FP"
+            ]
+          },
+          "regime": {
+            "type": "string"
+          },
+          "raw_log2FC": {
+            "type": "number"
+          },
+          "raw_se": {
+            "type": "number"
+          },
+          "raw_q": {
+            "type": "number"
+          },
+          "n_trt": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "n_cntrl": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

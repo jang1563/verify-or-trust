@@ -12,7 +12,7 @@ hardcoded paths, no private deps, no secrets; licensed data is downloaded-from-s
 | 4 | baselines | K1 reproduces on research panels (oracle +21.4% vs random, deduped) + fixture tests | ✅ |
 | 5 | grader | re-grades the research no-hint episodes to the EXACT published numbers + oracle-episode test | ✅ |
 | 6 | env + tools (live DE, query_gene, equivalence, Anthropic SDK, key via env) | mocked-LLM dry-run + LIVE 1-panel run + grade all green | ✅ |
-| 7 | CARD + README + results tables (with caveats) | "stranger" read-through: quickstart runs as written | ☐ |
+| 7 | CARD + README + results tables (with caveats) | "stranger" read-through: quickstart runs as written | ✅ |
 | 8 | Makefile reproduce (panels + K1 from committed GEARS substrate) | clean checkout: panels + K1 reproduce (+21.4%, 107 deduped panels) | ✅ |
-| 9 | private GitHub (jang1563/verify-or-trust) + private HF dataset (jang1563/verify-or-trust) — both pushed | ✅ |
-| 10 | flip public | separate decision | ☐ |
+| 9 | public GitHub (`jang1563/verify-or-trust`) + public HF dataset (`jang1563/verify-or-trust`) | repo metadata, license, topics, and dataset card visible | ✅ |
+| 10 | public-release guardrails | CI reproduces K1 and validates strict JSONL, substrate schema, manifest paths, and public-surface text | ✅ |

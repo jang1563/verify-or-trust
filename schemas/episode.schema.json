@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Verify-or-Trust Episode JSONL Record",
+  "type": "object",
+  "required": [
+    "model",
+    "perturbation",
+    "n_panel",
+    "verified",
+    "n_de",
+    "queried",
+    "n_query",
+    "n_turns",
+    "calls",
+    "submitted_n"
+  ],
+  "properties": {
+    "model": {
+      "type": "string"
+    },
+    "perturbation": {
+      "type": "string"
+    },
+    "n_panel": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "n_wrong": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "verified": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "n_de": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "queried": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "n_query": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "n_turns": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "calls": {
+      "type": "object"
+    },
+    "submitted_n": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

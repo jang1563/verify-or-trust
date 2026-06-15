@@ -24,6 +24,15 @@ __all__ = ["PanelConfig", "build_panels", "write_panels"]
 _RAW_COLS = ["raw_log2FC", "raw_se", "raw_q", "n_trt", "n_cntrl"]
 
 
+def _json_float(value) -> float | None:
+    if pd.isna(value):
+        return None
+    x = float(value)
+    if not np.isfinite(x):
+        return None
+    return x
+
+
 @dataclass
 class PanelConfig:
     N: int = 30                 # target panel size
@@ -80,7 +89,7 @@ def build_panels(substrate: "pd.DataFrame | str", cfg: PanelConfig | None = None
         panel = panel.iloc[rng.permutation(len(panel))]
         recs = [
             {
-                k: (float(r[k]) if k in ("fm_log2FC", "raw_log2FC", "raw_se", "raw_q")
+                k: (_json_float(r[k]) if k in ("fm_log2FC", "raw_log2FC", "raw_se", "raw_q")
                     else bool(r[k]) if k == "fm_correct"
                     else int(r[k]) if k in ("n_trt", "n_cntrl")
                     else str(r[k]))
@@ -97,4 +106,4 @@ def write_panels(panels: list[dict], path: str) -> None:
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w") as f:
         for rec in panels:
-            f.write(json.dumps(rec) + "\n")
+            f.write(json.dumps(rec, allow_nan=False) + "\n")

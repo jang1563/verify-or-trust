@@ -9,7 +9,7 @@ One row per (perturbation, gene) edge. Columns:
 |---|---|---|
 | `perturbation` | str | perturbation id (e.g. `ETS2+IKZF3`; `X+ctrl` / `X` for singles) |
 | `gene` | str | readout gene (symbol for `gears_norman`; index for `state_tahoe`) |
-| `fm_log2FC` | float | the foundation model's predicted log2 fold-change |
+| `fm_log2FC` | float\|null | the foundation model's predicted log2 fold-change; `null` when the source prediction is missing |
 | `fm_call` | `effect`\|`no_effect` | FM call (|fm_log2FC| ≥ δ) |
 | `real_label` | `POSITIVE`\|`TESTED_NEGATIVE` | held-out ground truth (UNTESTED rows are dropped) |
 | `regime` | str | reliability regime / novelty tag (substrate-specific) |
