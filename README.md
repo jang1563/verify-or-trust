@@ -102,7 +102,8 @@ Norman 2019 is **public** (GEO GSE133344, via GEARS); a processed cell subset is
 for reproducibility of the live assay. See [`data/README.md`](data/README.md). Results: [`results/RESULTS.md`](results/RESULTS.md).
 
 ## Citation
-See [`CITATION.cff`](CITATION.cff) and [`.zenodo.json`](.zenodo.json) for citation and archival metadata.
+See [`CITATION.cff`](CITATION.cff), [`.zenodo.json`](.zenodo.json), and
+[`docs/ARCHIVAL_RELEASE.md`](docs/ARCHIVAL_RELEASE.md) for citation and archival metadata.
 A preprint describing the benchmark and findings is in preparation.
 
 ## License

@@ -10,11 +10,11 @@
     "description": "A verifiable-reward benchmark for calibrated verification in LLM-orchestrated biology foundation-model pipelines."
   },
   "release": {
-    "version": "0.1.1",
-    "tag": "v0.1.1",
-    "release_url": "https://github.com/jang1563/verify-or-trust/releases/tag/v0.1.1",
-    "canonical_revision": "Git tag v0.1.1",
-    "dataset_commit": "995bde7e041a743e188cdb2fc50479f324c0d92b"
+    "version": "0.1.2",
+    "tag": "v0.1.2",
+    "release_url": "https://github.com/jang1563/verify-or-trust/releases/tag/v0.1.2",
+    "canonical_revision": "Git tag v0.1.2",
+    "dataset": "https://huggingface.co/datasets/jang1563/verify-or-trust"
   },
   "entrypoints": {
     "human_readme": "README.md",
@@ -22,6 +22,7 @@
     "schema_docs": "SCHEMA.md",
     "release_process": "RELEASE.md",
     "archival_metadata": ".zenodo.json",
+    "archival_release_notes": "docs/ARCHIVAL_RELEASE.md",
     "results": "results/RESULTS.md",
     "ci_workflow": ".github/workflows/ci.yml",
     "validator": "scripts/validate_public_release.py"

@@ -16,3 +16,4 @@ hardcoded paths, no private deps, no secrets; licensed data is downloaded-from-s
 | 8 | Makefile reproduce (panels + K1 from committed GEARS substrate) | clean checkout: panels + K1 reproduce (+21.4%, 107 deduped panels) | ✅ |
 | 9 | public GitHub (`jang1563/verify-or-trust`) + public HF dataset (`jang1563/verify-or-trust`) | repo metadata, license, topics, and dataset card visible | ✅ |
 | 10 | public-release guardrails | CI reproduces K1 and validates strict JSONL, substrate schema, manifest paths, and public-surface text | ✅ |
+| 11 | DOI-ready archive metadata | `.zenodo.json`, `CITATION.cff`, and `docs/ARCHIVAL_RELEASE.md` agree on the frozen public release | ✅ |
