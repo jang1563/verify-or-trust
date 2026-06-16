@@ -4,8 +4,8 @@ title: "Verify-or-Trust: a verifiable-reward agentic benchmark for biology found
 authors:
   - family-names: Kim
     given-names: JangKeun
-version: 0.1.0
-date-released: 2026-06-15
+version: 0.1.1
+date-released: 2026-06-16
 license: Apache-2.0
 abstract: >
   Verify-or-Trust measures whether an LLM agent, orchestrating a fallible perturbation foundation model,

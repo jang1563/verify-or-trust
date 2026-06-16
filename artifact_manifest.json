@@ -10,10 +10,10 @@
     "description": "A verifiable-reward benchmark for calibrated verification in LLM-orchestrated biology foundation-model pipelines."
   },
   "release": {
-    "version": "0.1.0",
-    "tag": "v0.1.0",
-    "release_url": "https://github.com/jang1563/verify-or-trust/releases/tag/v0.1.0",
-    "commit": "718962d12959129593e3190ccf27eab372796435",
+    "version": "0.1.1",
+    "tag": "v0.1.1",
+    "release_url": "https://github.com/jang1563/verify-or-trust/releases/tag/v0.1.1",
+    "canonical_revision": "Git tag v0.1.1",
     "dataset_commit": "995bde7e041a743e188cdb2fc50479f324c0d92b"
   },
   "entrypoints": {
