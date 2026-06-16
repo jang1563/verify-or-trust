@@ -2,6 +2,7 @@
 
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-Apache--2.0-green)
+![release](https://img.shields.io/github/v/release/jang1563/verify-or-trust?label=release)
 ![ci](https://github.com/jang1563/verify-or-trust/actions/workflows/ci.yml/badge.svg)
 ![reproducible](https://img.shields.io/badge/reproducible-make%20reproduce-green)
 
