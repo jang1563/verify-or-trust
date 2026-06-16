@@ -21,6 +21,7 @@
     "benchmark_card": "CARD.md",
     "schema_docs": "SCHEMA.md",
     "release_process": "RELEASE.md",
+    "archival_metadata": ".zenodo.json",
     "results": "results/RESULTS.md",
     "ci_workflow": ".github/workflows/ci.yml",
     "validator": "scripts/validate_public_release.py"

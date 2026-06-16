@@ -1,0 +1,41 @@
+{
+  "title": "Verify-or-Trust: a verifiable-reward agentic benchmark for biology foundation-model orchestration",
+  "upload_type": "software",
+  "description": "Verify-or-Trust measures whether an LLM agent, orchestrating a fallible perturbation foundation model, allocates costly verification to the genes where the model is actually wrong. The benchmark provides verifiable rewards, LLM-free baselines, two perturbation-biology substrates, and genuine tool execution.",
+  "creators": [
+    {
+      "name": "Kim, JangKeun",
+      "affiliation": "Weill Cornell Medicine"
+    }
+  ],
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "version": "0.1.0",
+  "keywords": [
+    "computational biology",
+    "single-cell genomics",
+    "perturb-seq",
+    "verifiable rewards",
+    "LLM agents",
+    "foundation models",
+    "AI safety",
+    "benchmarking"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/jang1563/verify-or-trust",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://huggingface.co/datasets/jang1563/verify-or-trust",
+      "relation": "isSupplementTo",
+      "resource_type": "dataset"
+    },
+    {
+      "identifier": "https://github.com/jang1563/causalatlas",
+      "relation": "isReferencedBy",
+      "resource_type": "software"
+    }
+  ]
+}

@@ -20,6 +20,7 @@ from verify_or_trust.panels import PanelConfig, build_panels, write_panels  # no
 
 
 STRICT_JSON_FILES = [
+    ".zenodo.json",
     "artifact_manifest.json",
     "schemas/artifact_manifest.schema.json",
     "schemas/substrate_row.schema.json",
