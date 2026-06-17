@@ -5,9 +5,9 @@ Releases and Zenodo.
 
 ## Current Frozen Release
 
-- Version: `0.1.3`
-- GitHub release: `https://github.com/jang1563/verify-or-trust/releases/tag/v0.1.3`
-- Canonical revision: Git tag `v0.1.3`
+- Version: `0.1.4`
+- GitHub release: `https://github.com/jang1563/verify-or-trust/releases/tag/v0.1.4`
+- Canonical revision: Git tag `v0.1.4`
 - Companion dataset: `https://huggingface.co/datasets/jang1563/verify-or-trust`
 
 The GitHub tag is the canonical software snapshot. The Hugging Face dataset

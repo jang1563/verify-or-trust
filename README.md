@@ -12,7 +12,8 @@ know where to _trust_ the model versus _run the real experiment_?**
 📋 Data schemas & a programmatic-API example: [`SCHEMA.md`](SCHEMA.md) · [`examples/quickstart.py`](examples/quickstart.py).
 Machine-readable artifact map: [`artifact_manifest.json`](artifact_manifest.json). Findings & honest limitations:
 [`CARD.md`](CARD.md). Build/verify process: [`RELEASE.md`](RELEASE.md).
-Contributing and reporting: [`CONTRIBUTING.md`](CONTRIBUTING.md) · [`SECURITY.md`](SECURITY.md).
+Contributing and reporting: [`CONTRIBUTING.md`](CONTRIBUTING.md) · [`SUPPORT.md`](SUPPORT.md) ·
+[`SECURITY.md`](SECURITY.md) · [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 A perturbation foundation model (e.g. GEARS, Arc STATE) predicts which genes a perturbation changes — fast, but
 sometimes confidently wrong. An LLM agent is given those predictions, a panel of candidate genes, and a costly
