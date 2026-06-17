@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Verify-or-Trust dataset
+    url: https://huggingface.co/datasets/jang1563/verify-or-trust
+    about: Download the public benchmark substrate and cell subset from Hugging Face.
+  - name: CausalAtlas companion study
+    url: https://github.com/jang1563/causalatlas
+    about: Read the broader causal-grounding study that links to this benchmark.
