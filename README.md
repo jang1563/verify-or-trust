@@ -5,15 +5,10 @@
 ![release](https://img.shields.io/github/v/release/jang1563/verify-or-trust?label=release)
 ![ci](https://github.com/jang1563/verify-or-trust/actions/workflows/ci.yml/badge.svg)
 ![reproducible](https://img.shields.io/badge/reproducible-make%20reproduce-green)
+[![HF dataset](https://img.shields.io/badge/HF-dataset-yellow)](https://huggingface.co/datasets/jang1563/verify-or-trust)
 
 **A verifiable-reward agentic benchmark: when an LLM orchestrates a fallible biology foundation model, does it
 know where to _trust_ the model versus _run the real experiment_?**
-
-📋 Data schemas & a programmatic-API example: [`SCHEMA.md`](SCHEMA.md) · [`examples/quickstart.py`](examples/quickstart.py).
-Machine-readable artifact map: [`artifact_manifest.json`](artifact_manifest.json). Findings & honest limitations:
-[`CARD.md`](CARD.md). Build/verify process: [`RELEASE.md`](RELEASE.md).
-Contributing and reporting: [`CONTRIBUTING.md`](CONTRIBUTING.md) · [`SUPPORT.md`](SUPPORT.md) ·
-[`SECURITY.md`](SECURITY.md) · [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 A perturbation foundation model (e.g. GEARS, Arc STATE) predicts which genes a perturbation changes — fast, but
 sometimes confidently wrong. An LLM agent is given those predictions, a panel of candidate genes, and a costly
@@ -22,9 +17,24 @@ sometimes confidently wrong. An LLM agent is given those predictions, a panel of
 real experiment — and the cost of the assay makes **verification allocation** the skill under test: spend the
 budget where the foundation model is actually wrong.
 
+## At a glance
+
+| Reader question | Where to go |
+|---|---|
+| What is being tested? | Verification allocation: trust a fallible FM or run a real assay. |
+| What is the reward? | Held-out perturb-seq truth with assay cost. |
+| What runs without an API key? | `make reproduce` for panel generation and LLM-free baselines. |
+| Where are schemas and API examples? | [`SCHEMA.md`](SCHEMA.md), [`examples/quickstart.py`](examples/quickstart.py) |
+| Where are the data artifacts? | [HF dataset](https://huggingface.co/datasets/jang1563/verify-or-trust), [`data/README.md`](data/README.md) |
+| Where are findings and limitations? | [`CARD.md`](CARD.md), [`results/RESULTS.md`](results/RESULTS.md) |
+| What is the machine-readable map? | [`artifact_manifest.json`](artifact_manifest.json) |
+
 > Built with a verification gate at every step (`RELEASE.md`): a clean clone reproduces the LLM-free value proof
 > with `make reproduce`, every metric is backed by a test or a one-command run, and no licensed third-party data
 > is redistributed. A preprint is in preparation.
+
+Repository governance and reporting: [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SUPPORT.md`](SUPPORT.md),
+[`SECURITY.md`](SECURITY.md), and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 ## Why this benchmark
 Most agentic-bio evals score whether the model gets the answer. This one isolates a capability that decides

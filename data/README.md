@@ -22,8 +22,8 @@ the builder downloads them from Arc's repo under Arc's terms; see below).
 ### `state_tahoe` (Arc Institute — NON-COMMERCIAL)
 - **Arc STATE / ST-HVG-Tahoe** released model outputs (`*_pred_de.csv`, `*_real_de.csv`) downloaded from Arc's
   Hugging Face repo `arcinstitute/ST-HVG-Tahoe`. **These are under Arc's Model License + Acceptable Use Policy,
-  which is non-commercial.** By running this substrate you download Arc's artifacts at your own request and agree
-  to their terms; this repository neither hosts nor relicenses them.
+  which is non-commercial.** Running this substrate downloads Arc's artifacts directly from Arc, and users must
+  comply with Arc's terms; this repository neither hosts nor relicenses them.
 - Gene identities in the Tahoe release are integer indices (not symbols), so the `query_gene` knowledge tool is
   not available for this substrate.
 
